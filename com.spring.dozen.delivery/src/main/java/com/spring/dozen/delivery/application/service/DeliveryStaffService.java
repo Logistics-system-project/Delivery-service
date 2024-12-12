@@ -2,11 +2,14 @@ package com.spring.dozen.delivery.application.service;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
 import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
@@ -62,6 +65,24 @@ public class DeliveryStaffService {
 		return CompanyDeliveryStaffCreateResponse.from(deliveryStaff, deliveryStaffHubRepository.save(deliveryStaffHub));
 	}
 
+	public Page<DeliveryStaffListResponse> getDeliveryStaffList(Pageable pageable) {
+		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findByIsDeletedFalse(pageable);
+		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
+
+	}
+
+	public Page<DeliveryStaffListResponse> searchDeliveryStaff(String searchedBy, String keyword, Pageable pageable) {
+		switch (searchedBy){
+			case "staffType":
+				return deliveryStaffRepository.findByStaffType(StaffType.of(keyword), pageable)
+					.map(DeliveryStaffListResponse::from);
+			case "deliveryOrder":
+				return deliveryStaffRepository.findByDeliveryOrder(Long.parseLong(keyword), pageable)
+					.map(DeliveryStaffListResponse::from);
+			default:
+				throw new DeliveryException(ErrorCode.INVALID_SEARCH_CONDITION);
+		}
+	}
 	private void validateDeliveryStaffById(Long deliveryStaffId) {
 		if (deliveryStaffRepository.existsById(deliveryStaffId))
 			throw new DeliveryException(ErrorCode.DUPLICATED_DELIVERY_STAFF);
