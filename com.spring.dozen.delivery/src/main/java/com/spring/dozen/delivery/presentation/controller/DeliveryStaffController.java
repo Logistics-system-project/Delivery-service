@@ -3,6 +3,7 @@ package com.spring.dozen.delivery.presentation.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.DeliveryStaffDetailResponse;
 import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
 import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.service.DeliveryStaffService;
@@ -53,5 +55,12 @@ public class DeliveryStaffController {
 
 		if(searchedBy!=null && keyword!=null) return ApiResponse.success(deliveryStaffService.searchDeliveryStaff(searchedBy, keyword, pageable));
 		return ApiResponse.success(deliveryStaffService.getDeliveryStaffList(pageable));
+	}
+
+	@GetMapping("/{deliveryStaffId}")
+	public ApiResponse<DeliveryStaffDetailResponse> getDeliveryStaffDetail(
+		@PathVariable Long deliveryStaffId
+	){
+		return ApiResponse.success(deliveryStaffService.getDeliveryStaffDetail(deliveryStaffId));
 	}
 }

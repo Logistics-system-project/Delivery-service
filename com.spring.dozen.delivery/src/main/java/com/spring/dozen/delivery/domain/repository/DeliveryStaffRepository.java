@@ -17,4 +17,5 @@ public interface DeliveryStaffRepository {
 	Page<DeliveryStaff> findByIsDeletedFalse(Pageable pageable);
 	Page<DeliveryStaff> findByStaffType(StaffType staffType, Pageable pageable);
 	Page<DeliveryStaff> findByDeliveryOrder(Long deliveryOrder, Pageable pageable);
+	Optional<DeliveryStaff> findById(Long id);
 }

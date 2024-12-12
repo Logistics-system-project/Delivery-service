@@ -19,4 +19,7 @@ Content-Type: application/json
 GET localhost:19094/api/delivery-staff?size=30&searchedBy=deliveryOrder&keyword=0
 Content-Type: application/json
 
+### 배송 관리자 상세 조회
+GET localhost:19094/api/delivery-staff/2
+Content-Type: application/json
 
