@@ -10,12 +10,4 @@ public enum StaffType {
 	COMPANY_STAFF("업체 배송 담당자");
 
 	private final String description;
-
-	public static StaffType of(String request){
-		return switch (request){
-			case "HUB_STAFF" -> HUB_STAFF;
-			case "COMPANY_STAFF" -> COMPANY_STAFF;
-			default -> null;
-		};
-	}
 }

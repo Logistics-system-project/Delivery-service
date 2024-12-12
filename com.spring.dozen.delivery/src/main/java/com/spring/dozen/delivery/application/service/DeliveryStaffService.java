@@ -32,7 +32,7 @@ public class DeliveryStaffService {
 
 		validateDeliveryStaffById(requestServiceDto.deliveryStaffId());
 
-		StaffType staffType = StaffType.of(StaffType.HUB_STAFF.name());
+		StaffType staffType = StaffType.HUB_STAFF;
 
 		DeliveryStaff deliveryStaff = DeliveryStaff.create(
 			requestServiceDto.deliveryStaffId(),
@@ -46,7 +46,7 @@ public class DeliveryStaffService {
 	public CompanyDeliveryStaffCreateResponse createCompanyDeliveryStaff(CompanyDeliveryStaffCreate requestServiceDto) {
 		validateDeliveryStaffById(requestServiceDto.deliveryStaffId());
 
-		StaffType staffType = StaffType.of(StaffType.COMPANY_STAFF.name());
+		StaffType staffType = StaffType.COMPANY_STAFF;
 
 		DeliveryStaff deliveryStaff = DeliveryStaff.create(
 			requestServiceDto.deliveryStaffId(),
