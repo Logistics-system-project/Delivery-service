@@ -12,6 +12,7 @@ import com.spring.dozen.delivery.presentation.dto.ApiResponse;
 import com.spring.dozen.delivery.presentation.dto.CompanyDeliveryStaffCreateRequest;
 import com.spring.dozen.delivery.presentation.dto.HubDeliveryStaffCreateRequest;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -23,14 +24,14 @@ public class DeliveryStaffController {
 
 	@PostMapping("/hub")
 	public ApiResponse<HubDeliveryStaffCreateResponse> createHubDeliveryStaff(
-		@RequestBody HubDeliveryStaffCreateRequest requestDto
+		@RequestBody @Valid HubDeliveryStaffCreateRequest requestDto
 	){
 		return ApiResponse.success(deliveryStaffService.createHubDeliveryStaff(requestDto.toServiceDto()));
 	}
 
 	@PostMapping("/company")
 	public ApiResponse<CompanyDeliveryStaffCreateResponse> createCompanyDeliveryStaff(
-		@RequestBody CompanyDeliveryStaffCreateRequest requestDto
+		@RequestBody @Valid CompanyDeliveryStaffCreateRequest requestDto
 	){
 		return ApiResponse.success(deliveryStaffService.createCompanyDeliveryStaff(requestDto.toServiceDto()));
 	}
