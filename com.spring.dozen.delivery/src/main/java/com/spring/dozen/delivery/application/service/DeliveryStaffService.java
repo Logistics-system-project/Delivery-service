@@ -90,7 +90,7 @@ public class DeliveryStaffService {
 		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
 		String hubId = null;
 
-		if (deliveryStaff.getStaffType().equals(StaffType.COMPANY_STAFF)) {
+		if (deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
 			hubId = findDeliveryStaffHubById(deliveryStaffId).getHubId().toString();
 		}
 

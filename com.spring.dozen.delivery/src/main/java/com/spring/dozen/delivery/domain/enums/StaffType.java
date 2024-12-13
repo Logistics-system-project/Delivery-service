@@ -18,4 +18,7 @@ public enum StaffType {
 			default -> null;
 		};
 	}
+	public boolean isSame(StaffType type){
+		return this == type;
+	}
 }
