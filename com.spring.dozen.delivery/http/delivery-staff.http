@@ -1,0 +1,16 @@
+### 허브 배송 관리자 생성
+POST localhost:19094/api/delivery-staff/hub
+Content-Type: application/json
+
+{
+  "deliveryStaffId": 1
+}
+
+### 업체 배송 관리자 생성
+POST localhost:19094/api/delivery-staff/company
+Content-Type: application/json
+
+{
+"deliveryStaffId": 2,
+"hubId": "42af8b30-3d6a-43ae-861b-c76eb25c967f"
+}
