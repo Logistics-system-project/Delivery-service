@@ -1,6 +1,5 @@
 package com.spring.dozen.delivery.infra;
 
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +9,7 @@ import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
 
-public interface DeliveryStaffRepositoryImpl extends JpaRepository<DeliveryStaff, Long>, DeliveryStaffRepository {
+public interface DeliveryStaffRepositoryImpl extends JpaRepository<DeliveryStaff, Long>, DeliveryStaffRepository, DeliveryStaffRepositoryCustom{
 	DeliveryStaff findTopByStaffTypeOrderByCreatedAtDesc(StaffType staffType);
 	Page<DeliveryStaff> findByIsDeletedFalse(Pageable pageable);
 	Page<DeliveryStaff> findByStaffType(StaffType staffType, Pageable pageable);

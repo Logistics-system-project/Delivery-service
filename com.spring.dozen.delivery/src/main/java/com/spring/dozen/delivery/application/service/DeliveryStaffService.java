@@ -11,6 +11,7 @@ import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.dto.DeliveryStaffDetailResponse;
 import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
+import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
 import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
@@ -73,17 +74,10 @@ public class DeliveryStaffService {
 
 	}
 
-	public Page<DeliveryStaffListResponse> searchDeliveryStaff(String searchedBy, String keyword, Pageable pageable) {
-		switch (searchedBy) {
-			case "staffType":
-				return deliveryStaffRepository.findByStaffType(StaffType.of(keyword), pageable)
-					.map(DeliveryStaffListResponse::from);
-			case "deliveryOrder":
-				return deliveryStaffRepository.findByDeliveryOrder(Long.parseLong(keyword), pageable)
-					.map(DeliveryStaffListResponse::from);
-			default:
-				throw new DeliveryException(ErrorCode.INVALID_SEARCH_CONDITION);
-		}
+	public Page<DeliveryStaffListResponse> searchDeliveryStaff(DeliveryStaffSearchCond cond, Pageable pageable) {
+		Page<DeliveryStaff> deliveryStaffPage= deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(cond, pageable);
+
+		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
 	}
 
 	public DeliveryStaffDetailResponse getDeliveryStaffDetail(Long deliveryStaffId) {

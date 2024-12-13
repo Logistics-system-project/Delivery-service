@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 
@@ -18,4 +19,7 @@ public interface DeliveryStaffRepository {
 	Page<DeliveryStaff> findByStaffType(StaffType staffType, Pageable pageable);
 	Page<DeliveryStaff> findByDeliveryOrder(Long deliveryOrder, Pageable pageable);
 	Optional<DeliveryStaff> findById(Long id);
+
+	Page<DeliveryStaff> findAllDeliveryStaffByStaffTypeAndDeliveryOrder(
+		DeliveryStaffSearchCond cond, Pageable pageable);
 }
