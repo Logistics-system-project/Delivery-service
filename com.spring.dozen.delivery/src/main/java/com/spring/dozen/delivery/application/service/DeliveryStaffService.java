@@ -2,11 +2,16 @@ package com.spring.dozen.delivery.application.service;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.DeliveryStaffDetailResponse;
+import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
+import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
 import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
@@ -59,12 +64,50 @@ public class DeliveryStaffService {
 			UUID.fromString(requestServiceDto.hubId())
 		);
 
-		return CompanyDeliveryStaffCreateResponse.from(deliveryStaff, deliveryStaffHubRepository.save(deliveryStaffHub));
+		return CompanyDeliveryStaffCreateResponse.from(deliveryStaff,
+			deliveryStaffHubRepository.save(deliveryStaffHub));
 	}
+
+	public Page<DeliveryStaffListResponse> getDeliveryStaffList(Pageable pageable) {
+		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findByIsDeletedFalse(pageable);
+		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
+
+	}
+
+	public Page<DeliveryStaffListResponse> searchDeliveryStaff(DeliveryStaffSearchCond cond, Pageable pageable) {
+		Page<DeliveryStaff> deliveryStaffPage= deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(cond, pageable);
+
+		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
+	}
+
+	public DeliveryStaffDetailResponse getDeliveryStaffDetail(Long deliveryStaffId) {
+		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
+		String hubId = null;
+
+		if (deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
+			hubId = findDeliveryStaffHubById(deliveryStaffId).getHubId().toString();
+		}
+
+		return DeliveryStaffDetailResponse.from(deliveryStaff, hubId);
+	}
+
+
+
+	/* UTIL */
 
 	private void validateDeliveryStaffById(Long deliveryStaffId) {
 		if (deliveryStaffRepository.existsById(deliveryStaffId))
 			throw new DeliveryException(ErrorCode.DUPLICATED_DELIVERY_STAFF);
+	}
+
+	private DeliveryStaff findDeliveryStaffById(Long deliveryStaffId) {
+		return deliveryStaffRepository.findById(deliveryStaffId)
+			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_STAFF_NOT_FOUND));
+	}
+
+	private DeliveryStaffHub findDeliveryStaffHubById(Long deliveryStaffId) {
+		return deliveryStaffHubRepository.findByDeliveryStaffId(deliveryStaffId)
+			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_STAFF_HUB_NOT_FOUND));
 	}
 
 	private Long calculateDeliveryOrder(StaffType staffType) {
