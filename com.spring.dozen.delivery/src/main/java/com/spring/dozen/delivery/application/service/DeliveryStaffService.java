@@ -112,6 +112,17 @@ public class DeliveryStaffService {
 		return DeliveryStaffDetailResponse.from(deliveryStaff, null);
 	}
 
+	@Transactional
+	public void deleteDeliveryStaff(Long deliveryStaffId) {
+		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
+
+		deliveryStaff.deleteBase(1L);
+
+		if(deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
+			DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
+			deliveryStaffHub.deleteBase(1L);
+		}
+	}
 
 	/* UTIL */
 

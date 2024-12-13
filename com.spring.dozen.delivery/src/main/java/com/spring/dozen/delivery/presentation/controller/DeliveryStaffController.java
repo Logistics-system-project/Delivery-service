@@ -2,6 +2,7 @@ package com.spring.dozen.delivery.presentation.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,5 +74,13 @@ public class DeliveryStaffController {
 		@RequestBody DeliveryStaffUpdateRequest request
 	) {
 		return ApiResponse.success(deliveryStaffService.updateDeliveryStaff(deliveryStaffId, request));
+	}
+
+	@DeleteMapping("/{deliveryStaffId}")
+	public ApiResponse<Void> deleteDeliveryStaff(
+		@PathVariable Long deliveryStaffId
+	){
+		deliveryStaffService.deleteDeliveryStaff(deliveryStaffId);
+		return ApiResponse.success();
 	}
 }

@@ -50,3 +50,7 @@ Content-Type: application/json
   "staffType": "COMPANY_STAFF",
   "hubId": "52af8b30-3d6a-43ae-861b-c76eb25c967f"
 }
+
+### 배송 관리자 삭제
+DELETE localhost:19094/api/delivery-staff/2
+Content-Type: application/json
