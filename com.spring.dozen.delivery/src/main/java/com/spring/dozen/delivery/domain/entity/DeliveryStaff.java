@@ -41,4 +41,9 @@ public class DeliveryStaff extends BaseEntity {
 			.deliveryOrder(deliveryOrder)
 			.build();
 	}
+
+	public void update(StaffType staffType, Long deliveryOrder) {
+		this.staffType = staffType;
+		this.deliveryOrder = deliveryOrder;
+	}
 }

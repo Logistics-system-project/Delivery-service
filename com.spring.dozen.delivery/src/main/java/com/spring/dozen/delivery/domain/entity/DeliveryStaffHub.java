@@ -47,4 +47,7 @@ public class DeliveryStaffHub extends BaseEntity {
 			.hubId(hubId)
 			.build();
 	}
+	public void update(UUID hubId){
+		this.hubId = hubId;
+	}
 }

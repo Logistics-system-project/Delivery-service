@@ -21,6 +21,7 @@ import com.spring.dozen.delivery.domain.entity.DeliveryStaffHub;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffHubRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
+import com.spring.dozen.delivery.presentation.dto.DeliveryStaffUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -75,7 +76,8 @@ public class DeliveryStaffService {
 	}
 
 	public Page<DeliveryStaffListResponse> searchDeliveryStaff(DeliveryStaffSearchCond cond, Pageable pageable) {
-		Page<DeliveryStaff> deliveryStaffPage= deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(cond, pageable);
+		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(
+			cond, pageable);
 
 		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
 	}
@@ -91,7 +93,37 @@ public class DeliveryStaffService {
 		return DeliveryStaffDetailResponse.from(deliveryStaff, hubId);
 	}
 
+	@Transactional
+	public DeliveryStaffDetailResponse updateDeliveryStaff(Long deliveryStaffId, DeliveryStaffUpdateRequest request) {
+		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
 
+		StaffType newStaffType = getStaffType(request.staffType());
+
+		// StaffType이 변경된 경우 처리
+		if (!deliveryStaff.getStaffType().isSame(newStaffType)) {
+			return handleStaffTypeChange(deliveryStaff, newStaffType, request.hubId());
+		}
+
+		// StaffType이 동일하며 hubId만 변경되는 경우 처리
+		if (newStaffType.isSame(StaffType.COMPANY_STAFF)) {
+			return handleHubIdChange(deliveryStaffId, request.hubId(), deliveryStaff);
+		}
+
+		// StaffType도 변경되지 않고 HubId도 변경되지 않은 경우
+		return DeliveryStaffDetailResponse.from(deliveryStaff, null);
+	}
+
+	@Transactional
+	public void deleteDeliveryStaff(Long deliveryStaffId) {
+		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
+
+		deliveryStaff.deleteBase(1L);
+
+		if (deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
+			DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
+			deliveryStaffHub.deleteBase(1L);
+		}
+	}
 
 	/* UTIL */
 
@@ -110,6 +142,14 @@ public class DeliveryStaffService {
 			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_STAFF_HUB_NOT_FOUND));
 	}
 
+	private StaffType getStaffType(String staffType) {
+		StaffType newStaffType = StaffType.of(staffType);
+		if (newStaffType == null) {
+			throw new DeliveryException(ErrorCode.UNSUPPORTED_STAFF_TYPE);
+		}
+		return newStaffType;
+	}
+
 	private Long calculateDeliveryOrder(StaffType staffType) {
 		DeliveryStaff lastDeliveryStaff = deliveryStaffRepository.findTopByStaffTypeOrderByCreatedAtDesc(staffType);
 		if (lastDeliveryStaff == null)
@@ -118,4 +158,35 @@ public class DeliveryStaffService {
 			return lastDeliveryStaff.getDeliveryOrder() + 1L;
 
 	}
+
+	private DeliveryStaffDetailResponse handleStaffTypeChange(DeliveryStaff deliveryStaff, StaffType newStaffType,
+		String hubId) {
+		Long updatedDeliveryOrder = calculateDeliveryOrder(newStaffType);
+
+		deliveryStaff.update(newStaffType, updatedDeliveryOrder);
+
+		if (!newStaffType.isSame(StaffType.COMPANY_STAFF)) {
+			DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaff.getId());
+			deliveryStaffHub.deleteBase(1L); // 임시 사용자 ID, 추후 수정 필요
+			return DeliveryStaffDetailResponse.from(deliveryStaff, null);
+		}
+
+		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
+			deliveryStaff,
+			UUID.fromString(hubId) // hubId 유효성 검사 필요
+		);
+		return DeliveryStaffDetailResponse.from(deliveryStaff,
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+
+	}
+
+	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, String hubId,
+		DeliveryStaff deliveryStaff) {
+		DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
+		deliveryStaffHub.update(UUID.fromString(hubId)); // hubId 유효성 검사 필요
+
+		return DeliveryStaffDetailResponse.from(deliveryStaff,
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+	}
+
 }
