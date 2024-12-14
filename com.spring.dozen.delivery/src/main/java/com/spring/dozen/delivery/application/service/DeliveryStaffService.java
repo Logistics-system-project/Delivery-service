@@ -76,7 +76,8 @@ public class DeliveryStaffService {
 	}
 
 	public Page<DeliveryStaffListResponse> searchDeliveryStaff(DeliveryStaffSearchCond cond, Pageable pageable) {
-		Page<DeliveryStaff> deliveryStaffPage= deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(cond, pageable);
+		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(
+			cond, pageable);
 
 		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
 	}
@@ -118,7 +119,7 @@ public class DeliveryStaffService {
 
 		deliveryStaff.deleteBase(1L);
 
-		if(deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
+		if (deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
 			DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
 			deliveryStaffHub.deleteBase(1L);
 		}
@@ -158,30 +159,34 @@ public class DeliveryStaffService {
 
 	}
 
-	private DeliveryStaffDetailResponse handleStaffTypeChange(DeliveryStaff deliveryStaff, StaffType newStaffType, String hubId) {
+	private DeliveryStaffDetailResponse handleStaffTypeChange(DeliveryStaff deliveryStaff, StaffType newStaffType,
+		String hubId) {
 		Long updatedDeliveryOrder = calculateDeliveryOrder(newStaffType);
 
 		deliveryStaff.update(newStaffType, updatedDeliveryOrder);
 
-		if (newStaffType.isSame(StaffType.COMPANY_STAFF)) {
-			DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
-				deliveryStaff,
-				UUID.fromString(hubId) // hubId 유효성 검사 필요
-			);
-			return DeliveryStaffDetailResponse.from(deliveryStaff, deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
-		} else {
+		if (!newStaffType.isSame(StaffType.COMPANY_STAFF)) {
 			DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaff.getId());
 			deliveryStaffHub.deleteBase(1L); // 임시 사용자 ID, 추후 수정 필요
 			return DeliveryStaffDetailResponse.from(deliveryStaff, null);
 		}
+
+		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
+			deliveryStaff,
+			UUID.fromString(hubId) // hubId 유효성 검사 필요
+		);
+		return DeliveryStaffDetailResponse.from(deliveryStaff,
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+
 	}
 
-	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, String hubId, DeliveryStaff deliveryStaff) {
+	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, String hubId,
+		DeliveryStaff deliveryStaff) {
 		DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
 		deliveryStaffHub.update(UUID.fromString(hubId)); // hubId 유효성 검사 필요
 
-		return DeliveryStaffDetailResponse.from(deliveryStaff, deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+		return DeliveryStaffDetailResponse.from(deliveryStaff,
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
 	}
-
 
 }
