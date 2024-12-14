@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.dozen.delivery.application.dto.DeliveryHistoryCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreateResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.Delivery;
@@ -14,7 +14,7 @@ import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
 import com.spring.dozen.delivery.domain.repository.DeliveryHistoryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
-import com.spring.dozen.delivery.presentation.dto.DeliveryHistoryCreateRequest;
+import com.spring.dozen.delivery.presentation.dto.deliveryHistory.DeliveryHistoryCreateRequest;
 
 import lombok.RequiredArgsConstructor;
 

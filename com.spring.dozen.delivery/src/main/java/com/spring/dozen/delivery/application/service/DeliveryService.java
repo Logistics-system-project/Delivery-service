@@ -5,10 +5,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.dozen.delivery.application.dto.DeliveryCreateResponse;
+import com.spring.dozen.delivery.application.dto.delivery.DeliveryCreateResponse;
 import com.spring.dozen.delivery.domain.entity.Delivery;
 import com.spring.dozen.delivery.domain.repository.DeliveryRepository;
-import com.spring.dozen.delivery.presentation.dto.DeliveryCreateRequest;
+import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryCreateRequest;
 
 import lombok.RequiredArgsConstructor;
 

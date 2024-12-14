@@ -7,13 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreate;
-import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
-import com.spring.dozen.delivery.application.dto.DeliveryStaffDetailResponse;
-import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
-import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreate;
-import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreate;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffDetailResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffListResponse;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffSearchCond;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreate;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
@@ -21,7 +21,7 @@ import com.spring.dozen.delivery.domain.entity.DeliveryStaffHub;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffHubRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffUpdateRequest;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
 
