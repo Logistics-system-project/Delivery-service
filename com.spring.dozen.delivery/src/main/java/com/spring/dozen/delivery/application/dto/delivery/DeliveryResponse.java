@@ -8,9 +8,6 @@ public record DeliveryResponse(
 	String status,
 	String departureHubId,
 	String arrivalHubId,
-	String address,
-	String recipientName,
-	String recipientSlackId,
 	String updatedAt,
 	String updatedBy
 ) {
@@ -21,9 +18,6 @@ public record DeliveryResponse(
 			delivery.getStatus().toString(),
 			delivery.getDepartureHubId().toString(),
 			delivery.getArrivalHubId().toString(),
-			delivery.getAddress(),
-			delivery.getRecipientName(),
-			delivery.getRecipientSlackId(),
 			delivery.getUpdatedAt().toString(),
 			delivery.getUpdatedBy()
 		);
