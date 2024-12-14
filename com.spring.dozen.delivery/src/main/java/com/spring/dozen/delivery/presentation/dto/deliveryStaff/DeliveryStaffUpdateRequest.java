@@ -1,6 +1,6 @@
-package com.spring.dozen.delivery.presentation.dto;
+package com.spring.dozen.delivery.presentation.dto.deliveryStaff;
 
-import com.spring.dozen.delivery.application.dto.DeliveryStaffUpdate;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffUpdate;
 
 import jakarta.validation.constraints.NotBlank;
 

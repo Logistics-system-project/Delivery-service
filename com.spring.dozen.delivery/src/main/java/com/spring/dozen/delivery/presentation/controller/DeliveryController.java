@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.dozen.delivery.application.dto.DeliveryCreateResponse;
+import com.spring.dozen.delivery.application.dto.delivery.DeliveryCreateResponse;
 import com.spring.dozen.delivery.application.service.DeliveryService;
 import com.spring.dozen.delivery.presentation.dto.ApiResponse;
-import com.spring.dozen.delivery.presentation.dto.DeliveryCreateRequest;
+import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryCreateRequest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

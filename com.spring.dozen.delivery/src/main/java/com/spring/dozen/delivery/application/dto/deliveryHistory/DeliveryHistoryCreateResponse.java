@@ -1,4 +1,4 @@
-package com.spring.dozen.delivery.application.dto;
+package com.spring.dozen.delivery.application.dto.deliveryHistory;
 
 import com.spring.dozen.delivery.domain.entity.DeliveryHistory;
 

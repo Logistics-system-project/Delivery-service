@@ -1,4 +1,4 @@
-package com.spring.dozen.delivery.application.dto;
+package com.spring.dozen.delivery.application.dto.deliveryHistory;
 
 public record DeliveryHistoryCreate(
 	String deliveryId,

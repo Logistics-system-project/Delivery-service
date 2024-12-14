@@ -1,4 +1,4 @@
-package com.spring.dozen.delivery.application.dto;
+package com.spring.dozen.delivery.application.dto.delivery;
 
 import com.spring.dozen.delivery.domain.entity.Delivery;
 

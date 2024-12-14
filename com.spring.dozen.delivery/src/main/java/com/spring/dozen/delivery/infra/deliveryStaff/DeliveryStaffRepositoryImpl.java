@@ -1,4 +1,4 @@
-package com.spring.dozen.delivery.infra;
+package com.spring.dozen.delivery.infra.deliveryStaff;
 
 
 import org.springframework.data.domain.Page;

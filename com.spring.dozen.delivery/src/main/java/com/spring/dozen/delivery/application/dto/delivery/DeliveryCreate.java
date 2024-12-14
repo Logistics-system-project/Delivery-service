@@ -1,4 +1,4 @@
-package com.spring.dozen.delivery.application.dto;
+package com.spring.dozen.delivery.application.dto.delivery;
 
 public record DeliveryCreate(
 	String orderId,

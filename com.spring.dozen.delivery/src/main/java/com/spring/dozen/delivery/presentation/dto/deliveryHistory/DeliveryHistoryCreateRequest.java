@@ -1,6 +1,6 @@
-package com.spring.dozen.delivery.presentation.dto;
+package com.spring.dozen.delivery.presentation.dto.deliveryHistory;
 
-import com.spring.dozen.delivery.application.dto.DeliveryHistoryCreate;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,4 +1,4 @@
-package com.spring.dozen.delivery.infra;
+package com.spring.dozen.delivery.infra.deliveryHistory;
 
 import java.util.UUID;
 
