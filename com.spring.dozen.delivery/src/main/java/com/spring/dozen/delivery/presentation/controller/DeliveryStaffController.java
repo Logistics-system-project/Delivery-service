@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.dozen.delivery.application.annotation.RequireRole;
 import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.dto.DeliveryStaffDetailResponse;
 import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
@@ -36,6 +37,7 @@ public class DeliveryStaffController {
 	private final DeliveryStaffService deliveryStaffService;
 
 	@PostMapping("/hub")
+	@RequireRole({"MASTER"})
 	public ApiResponse<HubDeliveryStaffCreateResponse> createHubDeliveryStaff(
 		@RequestBody @Valid HubDeliveryStaffCreateRequest requestDto
 	) {
@@ -43,6 +45,7 @@ public class DeliveryStaffController {
 	}
 
 	@PostMapping("/company")
+	@RequireRole({"MASTER", "HUB_MANAGER"})
 	public ApiResponse<CompanyDeliveryStaffCreateResponse> createCompanyDeliveryStaff(
 		@RequestBody @Valid CompanyDeliveryStaffCreateRequest requestDto
 	) {
@@ -50,6 +53,7 @@ public class DeliveryStaffController {
 	}
 
 	@GetMapping
+	@RequireRole({"MASTER", "HUB_MANAGER"})
 	public ApiResponse<Page<DeliveryStaffListResponse>> getDeliveryStaffList(
 		PaginationRequest request,
 		DeliveryStaffSearchCond cond
@@ -62,6 +66,7 @@ public class DeliveryStaffController {
 	}
 
 	@GetMapping("/{deliveryStaffId}")
+	@RequireRole({"MASTER", "HUB_MANAGER", "HUB_DELIVERY_STAFF"})
 	public ApiResponse<DeliveryStaffDetailResponse> getDeliveryStaffDetail(
 		@PathVariable Long deliveryStaffId
 	) {
@@ -69,6 +74,7 @@ public class DeliveryStaffController {
 	}
 
 	@PatchMapping("/{deliveryStaffId}")
+	@RequireRole({"MASTER", "HUB_MANAGER"})
 	public ApiResponse<DeliveryStaffDetailResponse> updateDeliveryStaff(
 		@PathVariable Long deliveryStaffId,
 		@RequestBody DeliveryStaffUpdateRequest request
@@ -77,6 +83,7 @@ public class DeliveryStaffController {
 	}
 
 	@DeleteMapping("/{deliveryStaffId}")
+	@RequireRole({"MASTER", "HUB_MANAGER"})
 	public ApiResponse<Void> deleteDeliveryStaff(
 		@PathVariable Long deliveryStaffId
 	){
