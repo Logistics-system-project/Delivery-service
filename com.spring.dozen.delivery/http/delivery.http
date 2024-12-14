@@ -10,3 +10,18 @@ Content-Type: application/json
   "recipientName": "John Doe",
   "recipientSlackId": "U12345678"
 }
+
+### 배송 경로 기록 생성
+POST localhost:19094/api/delivery-history
+Content-Type: application/json
+
+{
+  "deliveryId": "a9ae87c1-252e-4ddf-b015-f45114d934d3",
+  "deliveryStaffId": 1,
+  "sequence": 1,
+  "departureHubId": "223e4567-e89b-12d3-a456-426614174001",
+  "arrivalHubId": "323e4567-e89b-12d3-a456-426614174002",
+  "estimatedDistance": 12.5,
+  "estimatedDuration": 45
+}
+

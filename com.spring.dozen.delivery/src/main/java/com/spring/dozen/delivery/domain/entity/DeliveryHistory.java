@@ -69,7 +69,7 @@ public class DeliveryHistory extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private DeliveryHistoryStatus status;
 
-	public static DeliveryHistory create(Delivery delivery, DeliveryStaff deliveryStaff, UUID departureHubId, UUID arrivalHubId, Integer sequence, Double estimatedDistance, Integer estimatedDuration) {
+	public static DeliveryHistory create(Delivery delivery, DeliveryStaff deliveryStaff, Integer sequence, UUID departureHubId, UUID arrivalHubId, Double estimatedDistance, Integer estimatedDuration) {
 		return DeliveryHistory.builder()
 			.delivery(delivery)
 			.deliveryStaff(deliveryStaff)
