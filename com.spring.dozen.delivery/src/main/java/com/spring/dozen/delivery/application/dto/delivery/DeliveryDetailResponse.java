@@ -2,7 +2,7 @@ package com.spring.dozen.delivery.application.dto.delivery;
 
 import com.spring.dozen.delivery.domain.entity.Delivery;
 
-public record DeliveryCreateResponse(
+public record DeliveryDetailResponse(
 	String deliveryId,
 	String orderId,
 	String status,
@@ -11,12 +11,11 @@ public record DeliveryCreateResponse(
 	String address,
 	String recipientName,
 	String recipientSlackId,
-	Long companyDeliveryStaffId,
-	String createdAt,
-	String createdBy
+	String updatedAt,
+	String updatedBy
 ) {
-	public static DeliveryCreateResponse from(Delivery delivery) {
-		return new DeliveryCreateResponse(
+	public static DeliveryDetailResponse from(Delivery delivery) {
+		return new DeliveryDetailResponse(
 			delivery.getId().toString(),
 			delivery.getOrderId().toString(),
 			delivery.getStatus().toString(),
@@ -25,9 +24,8 @@ public record DeliveryCreateResponse(
 			delivery.getAddress(),
 			delivery.getRecipientName(),
 			delivery.getRecipientSlackId(),
-			delivery.getCompanyDeliveryStaff().getId(),
-			delivery.getCreatedAt().toString(),
-			delivery.getCreatedBy()
+			delivery.getUpdatedAt().toString(),
+			delivery.getUpdatedBy()
 		);
 	}
 }

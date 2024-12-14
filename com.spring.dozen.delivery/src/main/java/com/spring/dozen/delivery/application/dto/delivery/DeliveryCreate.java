@@ -6,6 +6,7 @@ public record DeliveryCreate(
 	String arrivalHubId,
 	String address,
 	String recipientName,
-	String recipientSlackId
+	String recipientSlackId,
+	Long companyDeliveryStaffId
 ) {
 }

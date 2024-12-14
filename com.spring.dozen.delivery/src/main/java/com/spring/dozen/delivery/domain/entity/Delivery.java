@@ -10,8 +10,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -54,7 +57,11 @@ public class Delivery extends BaseEntity {
 	@Column(length = 30, nullable = false)
 	private String recipientSlackId;
 
-	public static Delivery create(UUID orderId, UUID departureHubId, UUID arrivalHubId, String address, String recipientName, String recipientSlackId) {
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "company_delivery_staff_id", nullable = false)
+	private DeliveryStaff companyDeliveryStaff;
+
+	public static Delivery create(UUID orderId, UUID departureHubId, UUID arrivalHubId, String address, String recipientName, String recipientSlackId, DeliveryStaff companyDeliveryStaff) {
 		return Delivery.builder()
 			.orderId(orderId)
 			.status(DeliveryStatus.HUB_WAITING)
@@ -63,6 +70,7 @@ public class Delivery extends BaseEntity {
 			.address(address)
 			.recipientName(recipientName)
 			.recipientSlackId(recipientSlackId)
+			.companyDeliveryStaff(companyDeliveryStaff)
 			.build();
 	}
 

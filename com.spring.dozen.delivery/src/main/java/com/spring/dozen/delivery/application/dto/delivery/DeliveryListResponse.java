@@ -2,7 +2,7 @@ package com.spring.dozen.delivery.application.dto.delivery;
 
 import com.spring.dozen.delivery.domain.entity.Delivery;
 
-public record DeliveryResponse(
+public record DeliveryListResponse(
 	String deliveryId,
 	String orderId,
 	String status,
@@ -11,8 +11,8 @@ public record DeliveryResponse(
 	String updatedAt,
 	String updatedBy
 ) {
-	public static DeliveryResponse from(Delivery delivery) {
-		return new DeliveryResponse(
+	public static DeliveryListResponse from(Delivery delivery) {
+		return new DeliveryListResponse(
 			delivery.getId().toString(),
 			delivery.getOrderId().toString(),
 			delivery.getStatus().toString(),

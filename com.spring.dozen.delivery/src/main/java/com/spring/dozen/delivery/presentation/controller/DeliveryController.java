@@ -3,13 +3,16 @@ package com.spring.dozen.delivery.presentation.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.dozen.delivery.application.dto.delivery.DeliveryCreateResponse;
-import com.spring.dozen.delivery.application.dto.delivery.DeliveryResponse;
+import com.spring.dozen.delivery.application.dto.delivery.DeliveryDetailResponse;
+import com.spring.dozen.delivery.application.dto.delivery.DeliveryListResponse;
 import com.spring.dozen.delivery.application.service.DeliveryService;
 import com.spring.dozen.delivery.application.util.PageUtil;
 import com.spring.dozen.delivery.presentation.dto.ApiResponse;
@@ -35,12 +38,21 @@ public class DeliveryController {
 	}
 
 	@GetMapping
-	public ApiResponse<Page<DeliveryResponse>> getDeliveryList(
+	public ApiResponse<Page<DeliveryListResponse>> getDeliveryList(
 		PaginationRequest request,
 		DeliverySearchCond cond
 	){
 		Pageable pageable = PageUtil.toPageable(request);
 
 		return ApiResponse.success(deliveryService.getDeliveryList(pageable, cond));
+	}
+
+	@GetMapping("/{deliveryId}")
+	public ApiResponse<DeliveryDetailResponse> getDeliveryDetail(
+		@PathVariable String deliveryId,
+		@RequestHeader(value = "X-User-Id", required = true) String userId,
+		@RequestHeader(value = "X-Role", required = true) String role
+	){
+		return ApiResponse.success(deliveryService.getDeliveryDetail(deliveryId, userId, role));
 	}
 }
