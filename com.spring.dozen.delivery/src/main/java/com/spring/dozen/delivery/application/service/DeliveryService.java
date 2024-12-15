@@ -10,16 +10,19 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.dozen.delivery.application.dto.delivery.DeliveryCreateResponse;
 import com.spring.dozen.delivery.application.dto.delivery.DeliveryDetailResponse;
 import com.spring.dozen.delivery.application.dto.delivery.DeliveryListResponse;
+import com.spring.dozen.delivery.application.dto.delivery.DeliveryStatusUpdateResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.Delivery;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
+import com.spring.dozen.delivery.domain.enums.DeliveryStatus;
 import com.spring.dozen.delivery.domain.enums.Role;
 import com.spring.dozen.delivery.domain.repository.DeliveryHistoryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
 import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryCreateRequest;
 import com.spring.dozen.delivery.presentation.dto.delivery.DeliverySearchCond;
+import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryStatusUpdateRequest;
 import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
@@ -85,6 +88,19 @@ public class DeliveryService {
 		return DeliveryDetailResponse.from(delivery);
 	}
 
+	@Transactional
+	public DeliveryStatusUpdateResponse updateDeliveryStatus(UUID deliveryId, DeliveryStatusUpdateRequest request, String userId, String role) {
+		Delivery delivery = findDeliveryById(deliveryId);
+
+		// 허브 관리자일 때, 담당 허브인지 확인하는 로직 필요
+
+		roleCheck(delivery, userId, role);
+
+		DeliveryStatus deliveryStatus = getDeliveryStatus(request.status());
+
+		delivery.updateStatus(deliveryStatus);
+		return DeliveryStatusUpdateResponse.from(delivery);
+	}
 
 	/* UTIL */
 
@@ -96,6 +112,12 @@ public class DeliveryService {
 	private DeliveryStaff findDeliveryStaffById(Long deliveryId) {
 		return deliveryStaffRepository.findById(deliveryId)
 			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_STAFF_NOT_FOUND));
+	}
+
+	private DeliveryStatus getDeliveryStatus(String status) {
+		DeliveryStatus deliveryStatus = DeliveryStatus.of(status);
+		if(deliveryStatus==null) throw new DeliveryException(ErrorCode.UNSUPPORTED_DELIVERY_STATUS);
+		return deliveryStatus;
 	}
 
 	private void roleCheck(Delivery delivery, String userId, String role) {

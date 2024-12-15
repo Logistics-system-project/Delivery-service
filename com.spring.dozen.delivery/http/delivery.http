@@ -1,7 +1,7 @@
 ### 배송 생성
 POST localhost:19091/api/delivery
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjUzMTU4LCJleHAiOjE3MzQyNTY3NTh9.7Q273Dq44wn1Z0Tu3ZpaepJH6PSjyX-G13meHCoi7TTk9suXbScGkto0Nq5sVhvmFDxl61zOQhgxPg1dDZhJCw
 
 {
   "orderId": "8c7c72b3-1234-4e56-89ab-0c1234d56789",
@@ -65,14 +65,14 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 
 ### 배송 상세 조회
-GET localhost:19091/api/delivery/248d45dc-b58a-4143-a052-d6210bb85ff3
+GET localhost:19091/api/delivery/fdff8f11-9c87-4506-8809-d9a4d61cb436
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjUyNjQ3LCJleHAiOjE3MzQyNTYyNDd9.aOo9zg8tyXEQwFd6ThPKQbl8eFIeOTZo1SUjcmivzbBRbF9UYiZ2SjPrfHMD50IUhiPqH3CI1bNjz1twIbF4rA
 
-### 배송 수정
-PUT localhost:19091/api/delivery/40a9cae1-1825-4591-bfb8-5ed82c372716
+### 배송 정보 수정
+PUT localhost:19091/api/delivery/fdff8f11-9c87-4506-8809-d9a4d61cb436
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjUyNjQ3LCJleHAiOjE3MzQyNTYyNDd9.aOo9zg8tyXEQwFd6ThPKQbl8eFIeOTZo1SUjcmivzbBRbF9UYiZ2SjPrfHMD50IUhiPqH3CI1bNjz1twIbF4rA
 
 {
   "departureHubId": "1a8b7c6d-1234-4f56-89ab-0c9876d54321",
@@ -81,4 +81,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
   "recipientName": "lee Doe",
   "recipientSlackId": "1U12345678",
   "companyDeliveryStaffId": 2
+}
+
+### 배송 상태 수정
+PATCH localhost:19091/api/delivery/72763dec-345a-4f45-ae43-7722313e51d6
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjUyNjQ3LCJleHAiOjE3MzQyNTYyNDd9.aOo9zg8tyXEQwFd6ThPKQbl8eFIeOTZo1SUjcmivzbBRbF9UYiZ2SjPrfHMD50IUhiPqH3CI1bNjz1twIbF4rA
+
+{
+  "status": "HUB_IN_TRANSIT"
 }

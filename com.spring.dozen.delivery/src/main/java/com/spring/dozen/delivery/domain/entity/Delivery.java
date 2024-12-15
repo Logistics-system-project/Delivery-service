@@ -83,4 +83,7 @@ public class Delivery extends BaseEntity {
 		this.companyDeliveryStaff = companyDeliveryStaff;
 	}
 
+	public void updateStatus(DeliveryStatus status) {
+		this.status = status;
+	}
 }

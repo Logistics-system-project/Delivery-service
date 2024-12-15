@@ -13,6 +13,7 @@ public record DeliveryDetailResponse(
 	String address,
 	String recipientName,
 	String recipientSlackId,
+	Long companyDeliveryStaffId,
 	String updatedAt,
 	String updatedBy
 ) {
@@ -26,6 +27,7 @@ public record DeliveryDetailResponse(
 			delivery.getAddress(),
 			delivery.getRecipientName(),
 			delivery.getRecipientSlackId(),
+			delivery.getCompanyDeliveryStaff().getId(),
 			delivery.getUpdatedAt().toString(),
 			delivery.getUpdatedBy()
 		);
