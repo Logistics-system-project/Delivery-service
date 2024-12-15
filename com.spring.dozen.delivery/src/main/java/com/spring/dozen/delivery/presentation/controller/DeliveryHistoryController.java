@@ -3,6 +3,7 @@ package com.spring.dozen.delivery.presentation.controller;
 import java.util.UUID;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,5 +85,16 @@ public class DeliveryHistoryController {
 		@RequestHeader(value = "X-Role", required = true) String role
 	){
 		return ApiResponse.success(deliveryHistoryService.updateDeliveryHistoryStatus(deliveryHistoryId, request.toServiceDto(), userId, role));
+	}
+
+	@DeleteMapping("/{deliveryHistoryId}")
+	@RequireRole({"MASTER", "HUB_MANAGER"})
+	public ApiResponse<Void> deleteDeliveryHistory(
+		@PathVariable UUID deliveryHistoryId,
+		@RequestHeader(value = "X-User-Id", required = true) String userId,
+		@RequestHeader(value = "X-Role", required = true) String role
+	){
+		deliveryHistoryService.deleteDeliveryHistory(deliveryHistoryId, userId, role);
+		return ApiResponse.success();
 	}
 }

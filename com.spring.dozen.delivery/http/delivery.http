@@ -51,7 +51,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
 
 {
-  "deliveryId": "6ac711f4-9e7a-44d8-ae90-9b02cf412213",
+  "deliveryId": "91dab6ac-0ee8-4824-8daf-c06f3115b461",
   "deliveryStaffId": 1,
   "sequence": 2,
   "departureHubId": "723e4567-e89b-12d3-a456-426614174001",
@@ -130,3 +130,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 {
   "status": "OUT_FOR_DELIVERY"
 }
+
+### 배송 경로 기록 삭제
+DELETE localhost:19091/api/delivery-history/e2c95765-b671-42c4-8c92-18590997a3f2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ

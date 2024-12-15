@@ -102,6 +102,15 @@ public class DeliveryHistoryService {
 		return DeliveryHistoryStatusUpdateResponse.from(deliveryHistory);
 	}
 
+	@Transactional
+	public void deleteDeliveryHistory(UUID deliveryHistoryId, String userId, String role) {
+		DeliveryHistory deliveryHistory = findDeliveryHistoryById(deliveryHistoryId);
+
+		// 허브 관리자일 때, 담당 허브인지 확인하는 로직 필요
+
+		deliveryHistory.deleteBase(Long.valueOf(userId));
+	}
+
 	/* UTIL */
 
 	private Delivery findDeliveryById(UUID deliveryId) {
