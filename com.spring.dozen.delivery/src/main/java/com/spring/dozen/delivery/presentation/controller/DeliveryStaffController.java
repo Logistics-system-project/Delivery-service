@@ -15,6 +15,8 @@ import com.spring.dozen.delivery.application.annotation.RequireRole;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffDetailResponse;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffListResponse;
+import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
+import com.spring.dozen.delivery.presentation.dto.PageResponse;
 import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffSearchCond;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.service.DeliveryStaffService;
@@ -53,15 +55,13 @@ public class DeliveryStaffController {
 
 	@GetMapping
 	@RequireRole({"MASTER", "HUB_MANAGER"})
-	public ApiResponse<Page<DeliveryStaffListResponse>> getDeliveryStaffList(
+	public PageResponse<DeliveryStaffListResponse> getDeliveryStaffList(
 		PaginationRequest request,
 		DeliveryStaffSearchCond cond
 	) {
 		Pageable pageable = PageUtil.toPageable(request);
 
-		if (cond.staffType() != null || cond.deliveryOrder() != null)
-			return ApiResponse.success(deliveryStaffService.searchDeliveryStaff(cond, pageable));
-		return ApiResponse.success(deliveryStaffService.getDeliveryStaffList(pageable));
+		return PageResponse.of(deliveryStaffService.getDeliveryStaffList(pageable, cond));
 	}
 
 	@GetMapping("/{deliveryStaffId}")

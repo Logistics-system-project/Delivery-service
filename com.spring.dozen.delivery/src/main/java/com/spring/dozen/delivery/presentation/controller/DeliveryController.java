@@ -16,6 +16,7 @@ import com.spring.dozen.delivery.application.dto.delivery.DeliveryListResponse;
 import com.spring.dozen.delivery.application.service.DeliveryService;
 import com.spring.dozen.delivery.application.util.PageUtil;
 import com.spring.dozen.delivery.presentation.dto.ApiResponse;
+import com.spring.dozen.delivery.presentation.dto.PageResponse;
 import com.spring.dozen.delivery.presentation.dto.PaginationRequest;
 import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryCreateRequest;
 import com.spring.dozen.delivery.presentation.dto.delivery.DeliverySearchCond;
@@ -38,13 +39,13 @@ public class DeliveryController {
 	}
 
 	@GetMapping
-	public ApiResponse<Page<DeliveryListResponse>> getDeliveryList(
+	public PageResponse<DeliveryListResponse> getDeliveryList(
 		PaginationRequest request,
 		DeliverySearchCond cond
 	){
 		Pageable pageable = PageUtil.toPageable(request);
 
-		return ApiResponse.success(deliveryService.getDeliveryList(pageable, cond));
+		return PageResponse.of(deliveryService.getDeliveryList(pageable, cond));
 	}
 
 	@GetMapping("/{deliveryId}")

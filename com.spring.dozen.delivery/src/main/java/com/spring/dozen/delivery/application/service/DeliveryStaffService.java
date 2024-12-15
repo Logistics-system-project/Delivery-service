@@ -69,17 +69,11 @@ public class DeliveryStaffService {
 			deliveryStaffHubRepository.save(deliveryStaffHub));
 	}
 
-	public Page<DeliveryStaffListResponse> getDeliveryStaffList(Pageable pageable) {
-		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findByIsDeletedFalse(pageable);
-		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
-
-	}
-
-	public Page<DeliveryStaffListResponse> searchDeliveryStaff(DeliveryStaffSearchCond cond, Pageable pageable) {
+	public Page<DeliveryStaffListResponse> getDeliveryStaffList(Pageable pageable, DeliveryStaffSearchCond cond) {
 		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(
 			cond, pageable);
-
 		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
+
 	}
 
 	public DeliveryStaffDetailResponse getDeliveryStaffDetail(Long deliveryStaffId) {
