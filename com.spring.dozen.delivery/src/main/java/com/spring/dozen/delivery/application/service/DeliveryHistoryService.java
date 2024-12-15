@@ -2,11 +2,14 @@ package com.spring.dozen.delivery.application.service;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreate;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryListResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.Delivery;
@@ -15,6 +18,7 @@ import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
 import com.spring.dozen.delivery.domain.repository.DeliveryHistoryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
+import com.spring.dozen.delivery.presentation.dto.deliveryHistory.DeliveryHistorySearchCond;
 
 import lombok.RequiredArgsConstructor;
 
@@ -45,6 +49,13 @@ public class DeliveryHistoryService {
 
 		return DeliveryHistoryCreateResponse.from(deliveryHistoryRepository.save(deliveryHistory));
 	}
+
+	public Page<DeliveryHistoryListResponse> getDeliveryHistoryList(Pageable pageable, DeliveryHistorySearchCond cond){
+		Page<DeliveryHistory> deliveryHistoryPage = deliveryHistoryRepository.findAllDeliveryHistoryByCond(pageable, cond);
+		return deliveryHistoryPage.map(DeliveryHistoryListResponse::from);
+	}
+
+	/* UTIL */
 
 	private Delivery findDeliveryById(UUID deliveryId) {
 		return deliveryRepository.findById(deliveryId).orElseThrow(()-> new DeliveryException(ErrorCode.DELIVERY_NOT_FOUND));
