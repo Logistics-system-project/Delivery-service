@@ -39,9 +39,9 @@ public class DeliveryService {
 
 		// 존재하는 허브인지 확인하는 로직 구현 필요
 		Delivery delivery = Delivery.create(
-			UUID.fromString(request.orderId()),
-			UUID.fromString(request.departureHubId()),
-			UUID.fromString(request.arrivalHubId()),
+			request.orderId(),
+			request.departureHubId(),
+			request.arrivalHubId(),
 			request.address(),
 			request.recipientName(),
 			request.recipientSlackId(),

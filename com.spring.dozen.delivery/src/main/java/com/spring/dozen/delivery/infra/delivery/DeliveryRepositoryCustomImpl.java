@@ -53,11 +53,11 @@ public class DeliveryRepositoryCustomImpl implements DeliveryRepositoryCustom {
 		return Objects.nonNull(status) ? delivery.status.eq(DeliveryStatus.of(status)) : null;
 	}
 
-	private BooleanExpression departureHubIdEq(String departureHubId) {
-		return Objects.nonNull(departureHubId) ? delivery.departureHubId.eq(UUID.fromString(departureHubId)) : null;
+	private BooleanExpression departureHubIdEq(UUID departureHubId) {
+		return Objects.nonNull(departureHubId) ? delivery.departureHubId.eq(departureHubId) : null;
 	}
 
-	private BooleanExpression arrivalHubIdEq(String arrivalHubId) {
-		return Objects.nonNull(arrivalHubId) ? delivery.arrivalHubId.eq(UUID.fromString(arrivalHubId)) : null;
+	private BooleanExpression arrivalHubIdEq(UUID arrivalHubId) {
+		return Objects.nonNull(arrivalHubId) ? delivery.arrivalHubId.eq(arrivalHubId) : null;
 	}
 }

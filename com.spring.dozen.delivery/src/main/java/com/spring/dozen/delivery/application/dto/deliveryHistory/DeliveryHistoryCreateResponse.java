@@ -1,14 +1,16 @@
 package com.spring.dozen.delivery.application.dto.deliveryHistory;
 
+import java.util.UUID;
+
 import com.spring.dozen.delivery.domain.entity.DeliveryHistory;
 
 public record DeliveryHistoryCreateResponse(
-	String deliveryHistoryId,
-	String deliveryId,
+	UUID deliveryHistoryId,
+	UUID deliveryId,
 	Long deliveryStaffId,
 	Integer sequence,
-	String departureHubId,
-	String arrivalHubId,
+	UUID departureHubId,
+	UUID arrivalHubId,
 	Double estimatedDistance,
 	Integer estimatedDuration,
 	String status,
@@ -17,12 +19,12 @@ public record DeliveryHistoryCreateResponse(
 ) {
 	public static DeliveryHistoryCreateResponse from(DeliveryHistory deliveryHistory) {
 		return new DeliveryHistoryCreateResponse(
-			deliveryHistory.getId().toString(),
-			deliveryHistory.getDelivery().getId().toString(),
+			deliveryHistory.getId(),
+			deliveryHistory.getDelivery().getId(),
 			deliveryHistory.getDeliveryStaff().getId(),
 			deliveryHistory.getSequence(),
-			deliveryHistory.getDepartureHubId().toString(),
-			deliveryHistory.getArrivalHubId().toString(),
+			deliveryHistory.getDepartureHubId(),
+			deliveryHistory.getArrivalHubId(),
 			deliveryHistory.getEstimatedDistance(),
 			deliveryHistory.getEstimatedDuration(),
 			deliveryHistory.getStatus().toString(),

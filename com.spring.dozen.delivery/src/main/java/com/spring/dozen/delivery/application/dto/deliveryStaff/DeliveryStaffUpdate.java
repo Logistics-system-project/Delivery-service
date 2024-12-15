@@ -1,7 +1,9 @@
 package com.spring.dozen.delivery.application.dto.deliveryStaff;
 
+import java.util.UUID;
+
 public record DeliveryStaffUpdate(
-	String hubId,
+	UUID hubId,
 	String staffType
 ) {
 }

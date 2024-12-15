@@ -16,7 +16,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 ### 배송 생성2
 POST localhost:19091/api/delivery
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjEyNDc2LCJleHAiOjE3MzQyMTYwNzZ9.8ZQyzXIDo2xmsAJSTU0AwOz-0SkhVDBQPMGkmciVu4b1KMFFxkasWWAKHpCdB0ffztzkQrE2T07vm8Guv75EFg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 
 {
   "orderId": "7a6c85b3-2234-4e76-99ab-1d9876d54321",
@@ -24,7 +24,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
   "arrivalHubId": "4c5d6e7f-6789-8fab-2dce-3345678901bc",
   "address": "456 Maple Avenue, Busan, South Korea",
   "recipientName": "Alice",
-  "recipientSlackId": "U23456789"
+  "recipientSlackId": "U23456789",
+  "companyDeliveryStaffId": 2
 }
 
 ### 배송 생성3
@@ -46,9 +47,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 ### 배송 경로 기록 생성
 POST localhost:19094/api/delivery-history
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 
 {
-  "deliveryId": "a9ae87c1-252e-4ddf-b015-f45114d934d3",
+  "deliveryId": "9105f118-0db3-413c-ab5e-795bf8a3be4d",
   "deliveryStaffId": 1,
   "sequence": 1,
   "departureHubId": "223e4567-e89b-12d3-a456-426614174001",
@@ -63,7 +65,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 
 ### 배송 상세 조회
-GET localhost:19091/api/delivery/fb0cb4ce-66c4-47e6-9b60-feff3caef085
+GET localhost:19091/api/delivery/248d45dc-b58a-4143-a052-d6210bb85ff3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjEyNDc2LCJleHAiOjE3MzQyMTYwNzZ9.8ZQyzXIDo2xmsAJSTU0AwOz-0SkhVDBQPMGkmciVu4b1KMFFxkasWWAKHpCdB0ffztzkQrE2T07vm8Guv75EFg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 

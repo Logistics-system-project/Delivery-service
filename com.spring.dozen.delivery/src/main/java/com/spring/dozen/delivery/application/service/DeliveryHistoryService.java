@@ -30,15 +30,15 @@ public class DeliveryHistoryService {
 	@Transactional
 	public DeliveryHistoryCreateResponse createDeliveryHistory(DeliveryHistoryCreateRequest request) {
 
-		Delivery delivery = findDeliveryById(UUID.fromString(request.deliveryId()));
+		Delivery delivery = findDeliveryById(request.deliveryId());
 		DeliveryStaff deliveryStaff = findDeliveryStaffById(request.deliveryStaffId());
 
 		DeliveryHistory deliveryHistory = DeliveryHistory.create(
 			delivery,
 			deliveryStaff,
 			request.sequence(),
-			UUID.fromString(request.departureHubId()),
-			UUID.fromString(request.arrivalHubId()),
+			request.departureHubId(),
+			request.arrivalHubId(),
 			request.estimatedDistance(),
 			request.estimatedDuration()
 		);

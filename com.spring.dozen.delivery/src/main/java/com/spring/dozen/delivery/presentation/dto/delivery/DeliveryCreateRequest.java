@@ -1,19 +1,21 @@
 package com.spring.dozen.delivery.presentation.dto.delivery;
 
+import java.util.UUID;
+
 import com.spring.dozen.delivery.application.dto.delivery.DeliveryCreate;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record DeliveryCreateRequest(
-	@NotBlank
-	String orderId,
+	@NotNull
+	UUID orderId,
 
-	@NotBlank
-	String departureHubId,
+	@NotNull
+	UUID departureHubId,
 
-	@NotBlank
-	String arrivalHubId,
+	@NotNull
+	UUID arrivalHubId,
 
 	@NotBlank
 	String address,

@@ -62,7 +62,7 @@ public class DeliveryStaffService {
 
 		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
 			deliveryStaff,
-			UUID.fromString(requestServiceDto.hubId())
+			requestServiceDto.hubId()
 		);
 
 		return CompanyDeliveryStaffCreateResponse.from(deliveryStaff,
@@ -78,10 +78,10 @@ public class DeliveryStaffService {
 
 	public DeliveryStaffDetailResponse getDeliveryStaffDetail(Long deliveryStaffId) {
 		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
-		String hubId = null;
+		UUID hubId = null;
 
 		if (deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
-			hubId = findDeliveryStaffHubById(deliveryStaffId).getHubId().toString();
+			hubId = findDeliveryStaffHubById(deliveryStaffId).getHubId();
 		}
 
 		return DeliveryStaffDetailResponse.from(deliveryStaff, hubId);
@@ -154,7 +154,7 @@ public class DeliveryStaffService {
 	}
 
 	private DeliveryStaffDetailResponse handleStaffTypeChange(DeliveryStaff deliveryStaff, StaffType newStaffType,
-		String hubId) {
+		UUID hubId) {
 		Long updatedDeliveryOrder = calculateDeliveryOrder(newStaffType);
 
 		deliveryStaff.update(newStaffType, updatedDeliveryOrder);
@@ -167,20 +167,20 @@ public class DeliveryStaffService {
 
 		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
 			deliveryStaff,
-			UUID.fromString(hubId) // hubId 유효성 검사 필요
+			hubId // hubId 유효성 검사 필요
 		);
 		return DeliveryStaffDetailResponse.from(deliveryStaff,
-			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId());
 
 	}
 
-	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, String hubId,
+	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, UUID hubId,
 		DeliveryStaff deliveryStaff) {
 		DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
-		deliveryStaffHub.update(UUID.fromString(hubId)); // hubId 유효성 검사 필요
+		deliveryStaffHub.update(hubId); // hubId 유효성 검사 필요
 
 		return DeliveryStaffDetailResponse.from(deliveryStaff,
-			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId());
 	}
 
 }

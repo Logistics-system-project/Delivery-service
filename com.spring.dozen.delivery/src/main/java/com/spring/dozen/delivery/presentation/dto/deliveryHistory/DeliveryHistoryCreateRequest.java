@@ -1,13 +1,14 @@
 package com.spring.dozen.delivery.presentation.dto.deliveryHistory;
 
+import java.util.UUID;
+
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreate;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record DeliveryHistoryCreateRequest(
-	@NotBlank
-	String deliveryId,
+	@NotNull
+	UUID deliveryId,
 
 	@NotNull
 	Long deliveryStaffId,
@@ -15,11 +16,11 @@ public record DeliveryHistoryCreateRequest(
 	@NotNull
 	Integer sequence,
 
-	@NotBlank
-	String departureHubId,
+	@NotNull
+	UUID departureHubId,
 
-	@NotBlank
-	String arrivalHubId,
+	@NotNull
+	UUID arrivalHubId,
 
 	@NotNull
 	Double estimatedDistance,
