@@ -91,3 +91,8 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 {
   "status": "HUB_IN_TRANSIT"
 }
+
+### 배송 삭제
+DELETE localhost:19091/api/delivery/8e0d4680-0033-490b-b066-2978543c8066
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjUyNjQ3LCJleHAiOjE3MzQyNTYyNDd9.aOo9zg8tyXEQwFd6ThPKQbl8eFIeOTZo1SUjcmivzbBRbF9UYiZ2SjPrfHMD50IUhiPqH3CI1bNjz1twIbF4rA

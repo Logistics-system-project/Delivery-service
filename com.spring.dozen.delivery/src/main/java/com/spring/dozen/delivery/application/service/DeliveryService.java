@@ -68,7 +68,8 @@ public class DeliveryService {
 	}
 
 	@Transactional
-	public DeliveryDetailResponse updateDelivery(UUID deliveryId, DeliveryUpdateRequest request, String userId, String role) {
+	public DeliveryDetailResponse updateDelivery(UUID deliveryId, DeliveryUpdateRequest request, String userId,
+		String role) {
 		Delivery delivery = findDeliveryById(deliveryId);
 
 		// 허브 관리자일 때, 담당 허브인지 확인하는 로직 필요
@@ -89,7 +90,8 @@ public class DeliveryService {
 	}
 
 	@Transactional
-	public DeliveryStatusUpdateResponse updateDeliveryStatus(UUID deliveryId, DeliveryStatusUpdateRequest request, String userId, String role) {
+	public DeliveryStatusUpdateResponse updateDeliveryStatus(UUID deliveryId, DeliveryStatusUpdateRequest request,
+		String userId, String role) {
 		Delivery delivery = findDeliveryById(deliveryId);
 
 		// 허브 관리자일 때, 담당 허브인지 확인하는 로직 필요
@@ -100,6 +102,15 @@ public class DeliveryService {
 
 		delivery.updateStatus(deliveryStatus);
 		return DeliveryStatusUpdateResponse.from(delivery);
+	}
+
+	@Transactional
+	public void deleteDelivery(UUID deliveryId, String userId, String role) {
+		Delivery delivery = findDeliveryById(deliveryId);
+
+		// 허브 관리자일 때, 담당 허브인지 확인하는 로직 필요
+
+		delivery.deleteBase(Long.valueOf(userId));
 	}
 
 	/* UTIL */
@@ -116,7 +127,8 @@ public class DeliveryService {
 
 	private DeliveryStatus getDeliveryStatus(String status) {
 		DeliveryStatus deliveryStatus = DeliveryStatus.of(status);
-		if(deliveryStatus==null) throw new DeliveryException(ErrorCode.UNSUPPORTED_DELIVERY_STATUS);
+		if (deliveryStatus == null)
+			throw new DeliveryException(ErrorCode.UNSUPPORTED_DELIVERY_STATUS);
 		return deliveryStatus;
 	}
 

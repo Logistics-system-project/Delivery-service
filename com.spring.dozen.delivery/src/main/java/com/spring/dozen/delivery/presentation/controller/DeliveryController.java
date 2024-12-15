@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,4 +88,14 @@ public class DeliveryController {
 		return ApiResponse.success(deliveryService.updateDeliveryStatus(deliveryId, request, userId, role));
 	}
 
+	@DeleteMapping("/{deliveryId}")
+	@RequireRole({"MASTER", "HUB_MANAGER"})
+	public ApiResponse<Void> deleteDelivery(
+		@PathVariable UUID deliveryId,
+		@RequestHeader(value = "X-User-Id", required = true) String userId,
+		@RequestHeader(value = "X-Role", required = true) String role
+	){
+		deliveryService.deleteDelivery(deliveryId, userId, role);
+		return ApiResponse.success();
+	}
 }
