@@ -17,8 +17,10 @@ public enum ErrorCode {
 	INVALID_SEARCH_CONDITION(BAD_REQUEST, "유효하지 않은 검색 기준입니다."),
 	DELIVERY_STAFF_NOT_FOUND(NOT_FOUND, "존재하지 않는 배송 담당자입니다."),
 	DELIVERY_STAFF_HUB_NOT_FOUND(NOT_FOUND, "존재하지 않는 배송 담당자 허브 정보입니다."),
+	DELIVERY_NOT_FOUND(NOT_FOUND, "존재하지 않는 배송 정보입니다."),
 
-
+	ACCESS_DENIED(FORBIDDEN, "접근 권한이 없습니다."),
+	MISSING_ROLE(BAD_REQUEST, "권한 정보가 없습니다."),
 
 	;
 	private final HttpStatus httpStatus;

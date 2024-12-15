@@ -1,0 +1,28 @@
+### 배송 생성
+POST localhost:19091/api/delivery
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQ09NUEFOWV9ERUxJVkVSWV9TVEFGRiIsImlzcyI6ImF1dGgtc2VydmljZSIsImlhdCI6MTczNDIwNzc0MiwiZXhwIjoxNzM0MjExMzQyfQ._qK8V3rNbXtRByWKKRTySmQMiuF__2ob6Xhb30nC3T7UsWdw3zV8o8aIZdQqo9JWb2q-8HWEVEYV6AMmFmXYhA
+
+{
+  "orderId": "8c7c72b3-1234-4e56-89ab-0c1234d56789",
+  "departureHubId": "9a8b7c6d-1234-4f56-89ab-0c9876d54321",
+  "arrivalHubId": "1b2c3d4e-5678-9fab-0cde-1234567890ab",
+  "address": "123 Main Street, Seoul, South Korea",
+  "recipientName": "John Doe",
+  "recipientSlackId": "U12345678"
+}
+
+### 배송 경로 기록 생성
+POST localhost:19094/api/delivery-history
+Content-Type: application/json
+
+{
+  "deliveryId": "a9ae87c1-252e-4ddf-b015-f45114d934d3",
+  "deliveryStaffId": 1,
+  "sequence": 1,
+  "departureHubId": "223e4567-e89b-12d3-a456-426614174001",
+  "arrivalHubId": "323e4567-e89b-12d3-a456-426614174002",
+  "estimatedDistance": 12.5,
+  "estimatedDuration": 45
+}
+
