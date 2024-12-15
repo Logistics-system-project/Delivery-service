@@ -81,4 +81,13 @@ public class DeliveryHistory extends BaseEntity {
 			.status(DeliveryHistoryStatus.HUB_WAITING)
 			.build();
 	}
+
+	public void update(DeliveryStaff deliveryStaff, Integer sequence, UUID departureHubId, UUID arrivalHubId, Double estimatedDistance, Integer estimatedDuration) {
+		this.deliveryStaff = deliveryStaff;
+		this.sequence = sequence;
+		this.departureHubId = departureHubId;
+		this.arrivalHubId = arrivalHubId;
+		this.estimatedDistance = estimatedDistance;
+		this.estimatedDuration = estimatedDuration;
+	}
 }

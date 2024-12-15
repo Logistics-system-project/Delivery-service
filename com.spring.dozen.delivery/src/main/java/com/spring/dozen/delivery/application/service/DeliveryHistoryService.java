@@ -11,6 +11,7 @@ import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistory
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreateResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryDetailResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryListResponse;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryUpdate;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.Delivery;
@@ -61,6 +62,27 @@ public class DeliveryHistoryService {
 	public DeliveryHistoryDetailResponse getDeliveryHistoryDetail(UUID deliveryHistoryId, String userId, String role) {
 		DeliveryHistory deliveryHistory = findDeliveryHistoryById(deliveryHistoryId);
 		roleCheck(deliveryHistory, userId, role);
+		return DeliveryHistoryDetailResponse.from(deliveryHistory);
+	}
+
+	@Transactional
+	public DeliveryHistoryDetailResponse updateDeliveryHistory(UUID deliveryHistoryId, DeliveryHistoryUpdate request, String userId, String role) {
+		DeliveryHistory deliveryHistory = findDeliveryHistoryById(deliveryHistoryId);
+
+		// 허브 관리자일 때, 담당 허브인지 확인하는 로직 필요
+
+		roleCheck(deliveryHistory, userId, role);
+
+		DeliveryStaff deliveryStaff = findDeliveryStaffById(request.deliveryStaffId());
+
+		deliveryHistory.update(
+			deliveryStaff,
+			request.sequence(),
+			request.departureHubId(),
+			request.arrivalHubId(),
+			request.estimatedDistance(),
+			request.estimatedDuration()
+		);
 		return DeliveryHistoryDetailResponse.from(deliveryHistory);
 	}
 

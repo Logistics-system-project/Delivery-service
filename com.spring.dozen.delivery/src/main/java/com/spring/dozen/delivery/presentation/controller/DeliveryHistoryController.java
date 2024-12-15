@@ -6,11 +6,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.dozen.delivery.application.annotation.RequireRole;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreateResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryDetailResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryListResponse;
@@ -21,6 +23,7 @@ import com.spring.dozen.delivery.presentation.dto.PageResponse;
 import com.spring.dozen.delivery.presentation.dto.PaginationRequest;
 import com.spring.dozen.delivery.presentation.dto.deliveryHistory.DeliveryHistoryCreateRequest;
 import com.spring.dozen.delivery.presentation.dto.deliveryHistory.DeliveryHistorySearchCond;
+import com.spring.dozen.delivery.presentation.dto.deliveryHistory.DeliveryHistoryUpdateRequest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -57,4 +60,16 @@ public class DeliveryHistoryController {
 	){
 		return ApiResponse.success(deliveryHistoryService.getDeliveryHistoryDetail(deliveryHistoryId, userId, role));
 	}
+
+	@PutMapping("/{deliveryHistoryId}")
+	@RequireRole({"MASTER", "HUB_MANAGER", "HUB_DELIVERY_STAFF"})
+	public ApiResponse<DeliveryHistoryDetailResponse> updateDeliveryHistory(
+		@PathVariable UUID deliveryHistoryId,
+		@RequestBody DeliveryHistoryUpdateRequest request,
+		@RequestHeader(value = "X-User-Id", required = true) String userId,
+		@RequestHeader(value = "X-Role", required = true) String role
+	){
+		return ApiResponse.success(deliveryHistoryService.updateDeliveryHistory(deliveryHistoryId, request.toServiceDto(), userId, role));
+	}
+
 }

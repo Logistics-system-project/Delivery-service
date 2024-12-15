@@ -1,7 +1,7 @@
 ### 배송 생성
 POST localhost:19091/api/delivery
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjY2MzM4LCJleHAiOjE3MzQyNjk5Mzh9.5ZqyudRFEs_CiKNsVs4zct1VtLbgPairEdN2-73fBfLKtoKSuQWaYCG3-4mmTI3qHT35qofBf24tEIqAJxleuw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
 
 {
   "orderId": "8c7c72b3-1234-4e56-89ab-0c1234d56789",
@@ -16,7 +16,7 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 ### 배송 생성2
 POST localhost:19091/api/delivery
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjY2MzM4LCJleHAiOjE3MzQyNjk5Mzh9.5ZqyudRFEs_CiKNsVs4zct1VtLbgPairEdN2-73fBfLKtoKSuQWaYCG3-4mmTI3qHT35qofBf24tEIqAJxleuw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
 
 {
   "orderId": "7a6c85b3-2234-4e76-99ab-1d9876d54321",
@@ -48,10 +48,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 ### 배송 경로 기록 생성
 POST localhost:19091/api/delivery-history
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjY2MzM4LCJleHAiOjE3MzQyNjk5Mzh9.5ZqyudRFEs_CiKNsVs4zct1VtLbgPairEdN2-73fBfLKtoKSuQWaYCG3-4mmTI3qHT35qofBf24tEIqAJxleuw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
 
 {
-  "deliveryId": "c1cf1d49-45e6-4247-a4bf-95d4cd4a2c66",
+  "deliveryId": "a03f183b-e9a1-46c3-867b-aee733faea60",
   "deliveryStaffId": 1,
   "sequence": 2,
   "departureHubId": "723e4567-e89b-12d3-a456-426614174001",
@@ -107,3 +107,17 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 GET localhost:19091/api/delivery-history/0e4baad8-0a0f-4eb4-8401-b6bc1df89b8c
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjY2MzM4LCJleHAiOjE3MzQyNjk5Mzh9.5ZqyudRFEs_CiKNsVs4zct1VtLbgPairEdN2-73fBfLKtoKSuQWaYCG3-4mmTI3qHT35qofBf24tEIqAJxleuw
+
+### 배송 경로 기록 수정
+PUT localhost:19091/api/delivery-history/29f98161-41f6-410a-a59a-2582d7e1f9b0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
+
+{
+  "deliveryStaffId": 1,
+  "sequence": 2,
+  "departureHubId": "111e4567-e89b-12d3-a456-426614174001",
+  "arrivalHubId": "222e4567-e89b-12d3-a456-426614174002",
+  "estimatedDistance": 12.5,
+  "estimatedDuration": 45
+}
