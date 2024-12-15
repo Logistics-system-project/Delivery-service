@@ -1,29 +1,33 @@
-package com.spring.dozen.delivery.application.dto;
+package com.spring.dozen.delivery.application.dto.delivery;
+
+import java.util.UUID;
 
 import com.spring.dozen.delivery.domain.entity.Delivery;
 
 public record DeliveryCreateResponse(
-	String deliveryId,
-	String orderId,
+	UUID deliveryId,
+	UUID orderId,
 	String status,
-	String departureHubId,
-	String arrivalHubId,
+	UUID departureHubId,
+	UUID arrivalHubId,
 	String address,
 	String recipientName,
 	String recipientSlackId,
+	Long companyDeliveryStaffId,
 	String createdAt,
 	String createdBy
 ) {
 	public static DeliveryCreateResponse from(Delivery delivery) {
 		return new DeliveryCreateResponse(
-			delivery.getId().toString(),
-			delivery.getOrderId().toString(),
+			delivery.getId(),
+			delivery.getOrderId(),
 			delivery.getStatus().toString(),
-			delivery.getDepartureHubId().toString(),
-			delivery.getArrivalHubId().toString(),
+			delivery.getDepartureHubId(),
+			delivery.getArrivalHubId(),
 			delivery.getAddress(),
 			delivery.getRecipientName(),
 			delivery.getRecipientSlackId(),
+			delivery.getCompanyDeliveryStaff().getId(),
 			delivery.getCreatedAt().toString(),
 			delivery.getCreatedBy()
 		);

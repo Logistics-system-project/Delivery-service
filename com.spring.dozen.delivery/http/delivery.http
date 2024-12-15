@@ -1,7 +1,7 @@
 ### 배송 생성
 POST localhost:19091/api/delivery
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQ09NUEFOWV9ERUxJVkVSWV9TVEFGRiIsImlzcyI6ImF1dGgtc2VydmljZSIsImlhdCI6MTczNDIwNzc0MiwiZXhwIjoxNzM0MjExMzQyfQ._qK8V3rNbXtRByWKKRTySmQMiuF__2ob6Xhb30nC3T7UsWdw3zV8o8aIZdQqo9JWb2q-8HWEVEYV6AMmFmXYhA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 
 {
   "orderId": "8c7c72b3-1234-4e56-89ab-0c1234d56789",
@@ -9,15 +9,48 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiQ09NUEFOW
   "arrivalHubId": "1b2c3d4e-5678-9fab-0cde-1234567890ab",
   "address": "123 Main Street, Seoul, South Korea",
   "recipientName": "John Doe",
-  "recipientSlackId": "U12345678"
+  "recipientSlackId": "U12345678",
+  "companyDeliveryStaffId": 2
 }
+
+### 배송 생성2
+POST localhost:19091/api/delivery
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
+
+{
+  "orderId": "7a6c85b3-2234-4e76-99ab-1d9876d54321",
+  "departureHubId": "8b9c3d4f-5678-9cab-1cde-2234567890ab",
+  "arrivalHubId": "4c5d6e7f-6789-8fab-2dce-3345678901bc",
+  "address": "456 Maple Avenue, Busan, South Korea",
+  "recipientName": "Alice",
+  "recipientSlackId": "U23456789",
+  "companyDeliveryStaffId": 2
+}
+
+### 배송 생성3
+POST localhost:19091/api/delivery
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjEyNDc2LCJleHAiOjE3MzQyMTYwNzZ9.8ZQyzXIDo2xmsAJSTU0AwOz-0SkhVDBQPMGkmciVu4b1KMFFxkasWWAKHpCdB0ffztzkQrE2T07vm8Guv75EFg
+
+{
+  "orderId": "5b6d72e3-3344-5f67-88cb-2d8765432121",
+  "departureHubId": "6c7d4e8f-7890-0bab-3dfe-4456789012cd",
+  "arrivalHubId": "7d8e5f9f-8901-1cab-4eef-5567890123de",
+  "address": "789 Pine Road, Incheon, South Korea",
+  "recipientName": "Bob",
+  "recipientSlackId": "U34567890"
+}
+
+
 
 ### 배송 경로 기록 생성
 POST localhost:19094/api/delivery-history
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 
 {
-  "deliveryId": "a9ae87c1-252e-4ddf-b015-f45114d934d3",
+  "deliveryId": "9105f118-0db3-413c-ab5e-795bf8a3be4d",
   "deliveryStaffId": 1,
   "sequence": 1,
   "departureHubId": "223e4567-e89b-12d3-a456-426614174001",
@@ -25,4 +58,14 @@ Content-Type: application/json
   "estimatedDistance": 12.5,
   "estimatedDuration": 45
 }
+
+### 배송 목록 조회
+GET localhost:19091/api/delivery?status=OUT_FOR_DELIVERY&arrivalHubId=4c5d6e7f-6789-8fab-2dce-3345678901bc
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
+
+### 배송 상세 조회
+GET localhost:19091/api/delivery/248d45dc-b58a-4143-a052-d6210bb85ff3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 

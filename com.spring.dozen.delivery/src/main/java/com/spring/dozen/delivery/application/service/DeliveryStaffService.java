@@ -7,13 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreate;
-import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
-import com.spring.dozen.delivery.application.dto.DeliveryStaffDetailResponse;
-import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
-import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreate;
-import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreate;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffDetailResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffListResponse;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffSearchCond;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreate;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
@@ -21,7 +21,7 @@ import com.spring.dozen.delivery.domain.entity.DeliveryStaffHub;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffHubRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffUpdateRequest;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -62,32 +62,26 @@ public class DeliveryStaffService {
 
 		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
 			deliveryStaff,
-			UUID.fromString(requestServiceDto.hubId())
+			requestServiceDto.hubId()
 		);
 
 		return CompanyDeliveryStaffCreateResponse.from(deliveryStaff,
 			deliveryStaffHubRepository.save(deliveryStaffHub));
 	}
 
-	public Page<DeliveryStaffListResponse> getDeliveryStaffList(Pageable pageable) {
-		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findByIsDeletedFalse(pageable);
-		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
-
-	}
-
-	public Page<DeliveryStaffListResponse> searchDeliveryStaff(DeliveryStaffSearchCond cond, Pageable pageable) {
+	public Page<DeliveryStaffListResponse> getDeliveryStaffList(Pageable pageable, DeliveryStaffSearchCond cond) {
 		Page<DeliveryStaff> deliveryStaffPage = deliveryStaffRepository.findAllDeliveryStaffByStaffTypeAndDeliveryOrder(
 			cond, pageable);
-
 		return deliveryStaffPage.map(DeliveryStaffListResponse::from);
+
 	}
 
 	public DeliveryStaffDetailResponse getDeliveryStaffDetail(Long deliveryStaffId) {
 		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
-		String hubId = null;
+		UUID hubId = null;
 
 		if (deliveryStaff.getStaffType().isSame(StaffType.COMPANY_STAFF)) {
-			hubId = findDeliveryStaffHubById(deliveryStaffId).getHubId().toString();
+			hubId = findDeliveryStaffHubById(deliveryStaffId).getHubId();
 		}
 
 		return DeliveryStaffDetailResponse.from(deliveryStaff, hubId);
@@ -160,7 +154,7 @@ public class DeliveryStaffService {
 	}
 
 	private DeliveryStaffDetailResponse handleStaffTypeChange(DeliveryStaff deliveryStaff, StaffType newStaffType,
-		String hubId) {
+		UUID hubId) {
 		Long updatedDeliveryOrder = calculateDeliveryOrder(newStaffType);
 
 		deliveryStaff.update(newStaffType, updatedDeliveryOrder);
@@ -173,20 +167,20 @@ public class DeliveryStaffService {
 
 		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
 			deliveryStaff,
-			UUID.fromString(hubId) // hubId 유효성 검사 필요
+			hubId // hubId 유효성 검사 필요
 		);
 		return DeliveryStaffDetailResponse.from(deliveryStaff,
-			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId());
 
 	}
 
-	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, String hubId,
+	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, UUID hubId,
 		DeliveryStaff deliveryStaff) {
 		DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
-		deliveryStaffHub.update(UUID.fromString(hubId)); // hubId 유효성 검사 필요
+		deliveryStaffHub.update(hubId); // hubId 유효성 검사 필요
 
 		return DeliveryStaffDetailResponse.from(deliveryStaff,
-			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId().toString());
+			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId());
 	}
 
 }

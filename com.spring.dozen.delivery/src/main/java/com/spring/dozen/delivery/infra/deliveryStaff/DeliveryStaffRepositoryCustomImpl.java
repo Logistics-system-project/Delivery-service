@@ -1,4 +1,4 @@
-package com.spring.dozen.delivery.infra;
+package com.spring.dozen.delivery.infra.deliveryStaff;
 
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffSearchCond;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 

@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffSearchCond;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 

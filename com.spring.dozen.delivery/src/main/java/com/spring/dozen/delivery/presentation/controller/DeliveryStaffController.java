@@ -7,23 +7,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.dozen.delivery.application.annotation.RequireRole;
-import com.spring.dozen.delivery.application.dto.CompanyDeliveryStaffCreateResponse;
-import com.spring.dozen.delivery.application.dto.DeliveryStaffDetailResponse;
-import com.spring.dozen.delivery.application.dto.DeliveryStaffListResponse;
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffSearchCond;
-import com.spring.dozen.delivery.application.dto.HubDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffDetailResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffListResponse;
+import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
+import com.spring.dozen.delivery.presentation.dto.PageResponse;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffSearchCond;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.service.DeliveryStaffService;
 import com.spring.dozen.delivery.application.util.PageUtil;
 import com.spring.dozen.delivery.presentation.dto.ApiResponse;
-import com.spring.dozen.delivery.presentation.dto.CompanyDeliveryStaffCreateRequest;
-import com.spring.dozen.delivery.presentation.dto.DeliveryStaffUpdateRequest;
-import com.spring.dozen.delivery.presentation.dto.HubDeliveryStaffCreateRequest;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.CompanyDeliveryStaffCreateRequest;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffUpdateRequest;
+import com.spring.dozen.delivery.presentation.dto.deliveryStaff.HubDeliveryStaffCreateRequest;
 import com.spring.dozen.delivery.presentation.dto.PaginationRequest;
 
 import jakarta.validation.Valid;
@@ -54,15 +55,13 @@ public class DeliveryStaffController {
 
 	@GetMapping
 	@RequireRole({"MASTER", "HUB_MANAGER"})
-	public ApiResponse<Page<DeliveryStaffListResponse>> getDeliveryStaffList(
+	public PageResponse<DeliveryStaffListResponse> getDeliveryStaffList(
 		PaginationRequest request,
 		DeliveryStaffSearchCond cond
 	) {
 		Pageable pageable = PageUtil.toPageable(request);
 
-		if (cond.staffType() != null || cond.deliveryOrder() != null)
-			return ApiResponse.success(deliveryStaffService.searchDeliveryStaff(cond, pageable));
-		return ApiResponse.success(deliveryStaffService.getDeliveryStaffList(pageable));
+		return PageResponse.of(deliveryStaffService.getDeliveryStaffList(pageable, cond));
 	}
 
 	@GetMapping("/{deliveryStaffId}")
