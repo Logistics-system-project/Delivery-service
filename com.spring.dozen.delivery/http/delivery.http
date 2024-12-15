@@ -69,3 +69,16 @@ GET localhost:19091/api/delivery/248d45dc-b58a-4143-a052-d6210bb85ff3
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
 
+### 배송 수정
+PUT localhost:19091/api/delivery/40a9cae1-1825-4591-bfb8-5ed82c372716
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5MDMwLCJleHAiOjE3MzQyNTI2MzB9.5_lXfqzuFkaOdJ5N8sR78V83GNaXuO_ytWu1IZ4SqByP3tDQUBVFfSB9cgUh5mPzDKmWHjGjyH56lVijCMl4Iw
+
+{
+  "departureHubId": "1a8b7c6d-1234-4f56-89ab-0c9876d54321",
+  "arrivalHubId": "1b2c3d4e-5678-9fab-0cde-1234567890ab",
+  "address": "555 Main Street, Seoul, South Korea",
+  "recipientName": "lee Doe",
+  "recipientSlackId": "1U12345678",
+  "companyDeliveryStaffId": 2
+}

@@ -20,6 +20,7 @@ import com.spring.dozen.delivery.domain.repository.DeliveryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
 import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryCreateRequest;
 import com.spring.dozen.delivery.presentation.dto.delivery.DeliverySearchCond;
+import com.spring.dozen.delivery.presentation.dto.delivery.DeliveryUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -55,7 +56,7 @@ public class DeliveryService {
 		return deliveryPage.map(DeliveryListResponse::from);
 	}
 
-	public DeliveryDetailResponse getDeliveryDetail(String deliveryId, String userId, String role) {
+	public DeliveryDetailResponse getDeliveryDetail(UUID deliveryId, String userId, String role) {
 		Delivery delivery = findDeliveryById(deliveryId);
 
 		roleCheck(delivery, userId, role);
@@ -63,8 +64,32 @@ public class DeliveryService {
 		return DeliveryDetailResponse.from(delivery);
 	}
 
-	private Delivery findDeliveryById(String deliveryId) {
-		return deliveryRepository.findById(UUID.fromString(deliveryId))
+	@Transactional
+	public DeliveryDetailResponse updateDelivery(UUID deliveryId, DeliveryUpdateRequest request, String userId, String role) {
+		Delivery delivery = findDeliveryById(deliveryId);
+
+		// 허브 관리자일 때, 담당 허브인지 확인하는 로직 필요
+
+		roleCheck(delivery, userId, role);
+
+		DeliveryStaff deliveryStaff = findDeliveryStaffById(request.companyDeliveryStaffId());
+
+		delivery.update(
+			request.departureHubId(),
+			request.arrivalHubId(),
+			request.address(),
+			request.recipientName(),
+			request.recipientSlackId(),
+			deliveryStaff
+		);
+		return DeliveryDetailResponse.from(delivery);
+	}
+
+
+	/* UTIL */
+
+	private Delivery findDeliveryById(UUID deliveryId) {
+		return deliveryRepository.findById(deliveryId)
 			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_NOT_FOUND));
 	}
 
