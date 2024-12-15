@@ -1,13 +1,18 @@
 package com.spring.dozen.delivery.presentation.controller;
 
+import java.util.UUID;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryDetailResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryListResponse;
 import com.spring.dozen.delivery.application.service.DeliveryHistoryService;
 import com.spring.dozen.delivery.application.util.PageUtil;
@@ -42,5 +47,14 @@ public class DeliveryHistoryController {
 		Pageable pageable = PageUtil.toPageable(request);
 
 		return PageResponse.of(deliveryHistoryService.getDeliveryHistoryList(pageable, cond));
+	}
+
+	@GetMapping("/{deliveryHistoryId}")
+	public ApiResponse<DeliveryHistoryDetailResponse> getDeliveryHistoryDetail(
+		@PathVariable UUID deliveryHistoryId,
+		@RequestHeader(value = "X-User-Id", required = true) String userId,
+		@RequestHeader(value = "X-Role", required = true) String role
+	){
+		return ApiResponse.success(deliveryHistoryService.getDeliveryHistoryDetail(deliveryHistoryId, userId, role));
 	}
 }

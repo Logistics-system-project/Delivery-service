@@ -1,5 +1,8 @@
 package com.spring.dozen.delivery.domain.repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -14,4 +17,5 @@ public interface DeliveryHistoryRepository {
 	DeliveryHistory save(DeliveryHistory deliveryHistory);
 	boolean existsByDeliveryAndDeliveryStaff(Delivery delivery, DeliveryStaff deliveryStaff);
 	Page<DeliveryHistory> findAllDeliveryHistoryByCond(Pageable pageable, DeliveryHistorySearchCond cond);
+	Optional<DeliveryHistory> findById(UUID id);
 }

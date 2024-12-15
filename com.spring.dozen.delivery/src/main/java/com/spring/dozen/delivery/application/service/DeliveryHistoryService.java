@@ -9,12 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreate;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreateResponse;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryDetailResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryListResponse;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.Delivery;
 import com.spring.dozen.delivery.domain.entity.DeliveryHistory;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
+import com.spring.dozen.delivery.domain.enums.Role;
 import com.spring.dozen.delivery.domain.repository.DeliveryHistoryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
@@ -50,18 +52,41 @@ public class DeliveryHistoryService {
 		return DeliveryHistoryCreateResponse.from(deliveryHistoryRepository.save(deliveryHistory));
 	}
 
-	public Page<DeliveryHistoryListResponse> getDeliveryHistoryList(Pageable pageable, DeliveryHistorySearchCond cond){
-		Page<DeliveryHistory> deliveryHistoryPage = deliveryHistoryRepository.findAllDeliveryHistoryByCond(pageable, cond);
+	public Page<DeliveryHistoryListResponse> getDeliveryHistoryList(Pageable pageable, DeliveryHistorySearchCond cond) {
+		Page<DeliveryHistory> deliveryHistoryPage = deliveryHistoryRepository.findAllDeliveryHistoryByCond(pageable,
+			cond);
 		return deliveryHistoryPage.map(DeliveryHistoryListResponse::from);
+	}
+
+	public DeliveryHistoryDetailResponse getDeliveryHistoryDetail(UUID deliveryHistoryId, String userId, String role) {
+		DeliveryHistory deliveryHistory = findDeliveryHistoryById(deliveryHistoryId);
+		roleCheck(deliveryHistory, userId, role);
+		return DeliveryHistoryDetailResponse.from(deliveryHistory);
 	}
 
 	/* UTIL */
 
 	private Delivery findDeliveryById(UUID deliveryId) {
-		return deliveryRepository.findById(deliveryId).orElseThrow(()-> new DeliveryException(ErrorCode.DELIVERY_NOT_FOUND));
+		return deliveryRepository.findById(deliveryId)
+			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_NOT_FOUND));
 	}
 
 	private DeliveryStaff findDeliveryStaffById(Long deliveryStaffId) {
-		return deliveryStaffRepository.findById(deliveryStaffId).orElseThrow(()-> new DeliveryException(ErrorCode.DELIVERY_STAFF_NOT_FOUND));
+		return deliveryStaffRepository.findById(deliveryStaffId)
+			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_STAFF_NOT_FOUND));
+	}
+
+	private DeliveryHistory findDeliveryHistoryById(UUID deliveryHistoryId) {
+		return deliveryHistoryRepository.findById(deliveryHistoryId)
+			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_HISTORY_NOT_FOUND));
+	}
+
+	private void roleCheck(DeliveryHistory deliveryHistory, String userId, String role) {
+		if (Role.of(role).isSame(Role.HUB_DELIVERY_STAFF)) {
+			DeliveryStaff deliveryStaff = findDeliveryStaffById(Long.parseLong(userId));
+			if (!deliveryHistory.getDeliveryStaff().getId().equals(deliveryStaff.getId()))
+				throw new DeliveryException(ErrorCode.ACCESS_DENIED);
+		}
 	}
 }
+
