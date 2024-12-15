@@ -11,12 +11,15 @@ import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistory
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryCreateResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryDetailResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryListResponse;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryStatusUpdate;
+import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryStatusUpdateResponse;
 import com.spring.dozen.delivery.application.dto.deliveryHistory.DeliveryHistoryUpdate;
 import com.spring.dozen.delivery.application.exception.DeliveryException;
 import com.spring.dozen.delivery.application.exception.ErrorCode;
 import com.spring.dozen.delivery.domain.entity.Delivery;
 import com.spring.dozen.delivery.domain.entity.DeliveryHistory;
 import com.spring.dozen.delivery.domain.entity.DeliveryStaff;
+import com.spring.dozen.delivery.domain.enums.DeliveryHistoryStatus;
 import com.spring.dozen.delivery.domain.enums.Role;
 import com.spring.dozen.delivery.domain.repository.DeliveryHistoryRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryRepository;
@@ -86,6 +89,19 @@ public class DeliveryHistoryService {
 		return DeliveryHistoryDetailResponse.from(deliveryHistory);
 	}
 
+	@Transactional
+	public DeliveryHistoryStatusUpdateResponse updateDeliveryHistoryStatus(UUID deliveryHistoryId, DeliveryHistoryStatusUpdate request, String userId, String role) {
+		DeliveryHistory deliveryHistory = findDeliveryHistoryById(deliveryHistoryId);
+
+		roleCheck(deliveryHistory, userId, role);
+
+		DeliveryHistoryStatus deliveryHistoryStatus =getDeliveryHistoryStatus(request.status());
+
+		deliveryHistory.updateStatus(deliveryHistoryStatus);
+
+		return DeliveryHistoryStatusUpdateResponse.from(deliveryHistory);
+	}
+
 	/* UTIL */
 
 	private Delivery findDeliveryById(UUID deliveryId) {
@@ -101,6 +117,13 @@ public class DeliveryHistoryService {
 	private DeliveryHistory findDeliveryHistoryById(UUID deliveryHistoryId) {
 		return deliveryHistoryRepository.findById(deliveryHistoryId)
 			.orElseThrow(() -> new DeliveryException(ErrorCode.DELIVERY_HISTORY_NOT_FOUND));
+	}
+
+	private DeliveryHistoryStatus getDeliveryHistoryStatus(String status) {
+		DeliveryHistoryStatus deliveryHistoryStatus = DeliveryHistoryStatus.of(status);
+		if(deliveryHistoryStatus==null)
+			throw new DeliveryException(ErrorCode.UNSUPPORTED_DELIVERY_HISTORY_STATUS);
+		return deliveryHistoryStatus;
 	}
 
 	private void roleCheck(DeliveryHistory deliveryHistory, String userId, String role) {

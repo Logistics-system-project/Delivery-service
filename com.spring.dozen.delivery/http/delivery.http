@@ -51,7 +51,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
 
 {
-  "deliveryId": "a03f183b-e9a1-46c3-867b-aee733faea60",
+  "deliveryId": "6ac711f4-9e7a-44d8-ae90-9b02cf412213",
   "deliveryStaffId": 1,
   "sequence": 2,
   "departureHubId": "723e4567-e89b-12d3-a456-426614174001",
@@ -120,4 +120,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
   "arrivalHubId": "222e4567-e89b-12d3-a456-426614174002",
   "estimatedDistance": 12.5,
   "estimatedDuration": 45
+}
+
+### 배송 경로 기록 상태 수정
+PATCH localhost:19091/api/delivery-history/a64c6f15-025f-4c98-8fc9-023700e656b8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
+
+{
+  "status": "OUT_FOR_DELIVERY"
 }

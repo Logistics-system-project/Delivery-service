@@ -90,4 +90,8 @@ public class DeliveryHistory extends BaseEntity {
 		this.estimatedDistance = estimatedDistance;
 		this.estimatedDuration = estimatedDuration;
 	}
+
+	public void updateStatus(DeliveryHistoryStatus status) {
+		this.status = status;
+	}
 }
