@@ -24,7 +24,7 @@ public class DeliveryHistoryController {
 	public ApiResponse<DeliveryHistoryCreateResponse> createDeliveryHistory(
 		@RequestBody @Valid DeliveryHistoryCreateRequest request
 	){
-		return ApiResponse.success(deliveryHistoryService.createDeliveryHistory(request));
+		return ApiResponse.success(deliveryHistoryService.createDeliveryHistory(request.toServiceDto()));
 	}
 
 }

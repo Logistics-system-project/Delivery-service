@@ -44,7 +44,7 @@ public class DeliveryController {
 	public ApiResponse<DeliveryCreateResponse> createDelivery(
 		@RequestBody @Valid DeliveryCreateRequest request
 	){
-		return ApiResponse.success(deliveryService.createDelivery(request));
+		return ApiResponse.success(deliveryService.createDelivery(request.toServiceDto()));
 	}
 
 	@GetMapping
@@ -74,7 +74,7 @@ public class DeliveryController {
 		@RequestHeader(value = "X-User-Id", required = true) String userId,
 		@RequestHeader(value = "X-Role", required = true) String role
 	){
-		return ApiResponse.success(deliveryService.updateDelivery(deliveryId, request, userId, role));
+		return ApiResponse.success(deliveryService.updateDelivery(deliveryId, request.toServiceDto(), userId, role));
 	}
 
 	@PatchMapping("/{deliveryId}")
@@ -85,7 +85,7 @@ public class DeliveryController {
 		@RequestHeader(value = "X-User-Id", required = true) String userId,
 		@RequestHeader(value = "X-Role", required = true) String role
 	){
-		return ApiResponse.success(deliveryService.updateDeliveryStatus(deliveryId, request, userId, role));
+		return ApiResponse.success(deliveryService.updateDeliveryStatus(deliveryId, request.toServiceDto(), userId, role));
 	}
 
 	@DeleteMapping("/{deliveryId}")
