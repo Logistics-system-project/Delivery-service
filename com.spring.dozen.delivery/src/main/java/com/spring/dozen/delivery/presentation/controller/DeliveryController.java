@@ -77,7 +77,7 @@ public class DeliveryController {
 		return ApiResponse.success(deliveryService.updateDelivery(deliveryId, request.toServiceDto(), userId, role));
 	}
 
-	@PatchMapping("/{deliveryId}")
+	@PatchMapping("/status/{deliveryId}")
 	@RequireRole({"MASTER", "HUB_MANAGER", "HUB_DELIVERY_STAFF"})
 	public ApiResponse<DeliveryStatusUpdateResponse> updateDeliveryStatus(
 		@PathVariable UUID deliveryId,
