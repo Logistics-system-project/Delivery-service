@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.dozen.delivery.application.client.HubClient;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffDetailResponse;
@@ -32,6 +33,7 @@ public class DeliveryStaffService {
 
 	private final DeliveryStaffRepository deliveryStaffRepository;
 	private final DeliveryStaffHubRepository deliveryStaffHubRepository;
+	private final HubClient hubClient;
 
 	@Transactional
 	public HubDeliveryStaffCreateResponse createHubDeliveryStaff(HubDeliveryStaffCreate requestServiceDto) {
@@ -40,11 +42,8 @@ public class DeliveryStaffService {
 
 		StaffType staffType = StaffType.HUB_STAFF;
 
-		DeliveryStaff deliveryStaff = DeliveryStaff.create(
-			requestServiceDto.deliveryStaffId(),
-			staffType,
-			calculateDeliveryOrder(staffType)
-		);
+		DeliveryStaff deliveryStaff = DeliveryStaff.create(requestServiceDto.deliveryStaffId(), staffType,
+			calculateDeliveryOrder(staffType));
 		return HubDeliveryStaffCreateResponse.from(deliveryStaffRepository.save(deliveryStaff));
 	}
 
@@ -54,16 +53,12 @@ public class DeliveryStaffService {
 
 		StaffType staffType = StaffType.COMPANY_STAFF;
 
-		DeliveryStaff deliveryStaff = DeliveryStaff.create(
-			requestServiceDto.deliveryStaffId(),
-			staffType,
-			calculateDeliveryOrder(staffType)
-		);
+		validateHubByHubId(requestServiceDto.hubId());
 
-		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
-			deliveryStaff,
-			requestServiceDto.hubId()
-		);
+		DeliveryStaff deliveryStaff = DeliveryStaff.create(requestServiceDto.deliveryStaffId(), staffType,
+			calculateDeliveryOrder(staffType));
+
+		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(deliveryStaff, requestServiceDto.hubId());
 
 		return CompanyDeliveryStaffCreateResponse.from(deliveryStaff,
 			deliveryStaffHubRepository.save(deliveryStaffHub));
@@ -165,10 +160,9 @@ public class DeliveryStaffService {
 			return DeliveryStaffDetailResponse.from(deliveryStaff, null);
 		}
 
-		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(
-			deliveryStaff,
-			hubId // hubId 유효성 검사 필요
-		);
+		validateHubByHubId(hubId);
+
+		DeliveryStaffHub deliveryStaffHub = DeliveryStaffHub.create(deliveryStaff, hubId);
 		return DeliveryStaffDetailResponse.from(deliveryStaff,
 			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId());
 
@@ -177,10 +171,15 @@ public class DeliveryStaffService {
 	private DeliveryStaffDetailResponse handleHubIdChange(Long deliveryStaffId, UUID hubId,
 		DeliveryStaff deliveryStaff) {
 		DeliveryStaffHub deliveryStaffHub = findDeliveryStaffHubById(deliveryStaffId);
-		deliveryStaffHub.update(hubId); // hubId 유효성 검사 필요
+		validateHubByHubId(hubId);
+		deliveryStaffHub.update(hubId);
 
 		return DeliveryStaffDetailResponse.from(deliveryStaff,
 			deliveryStaffHubRepository.save(deliveryStaffHub).getHubId());
 	}
 
+	private void validateHubByHubId(UUID hubId) {
+		if (!hubClient.existsHubByHubId(hubId))
+			throw new DeliveryException(ErrorCode.HUB_NOT_FOUND);
+	}
 }

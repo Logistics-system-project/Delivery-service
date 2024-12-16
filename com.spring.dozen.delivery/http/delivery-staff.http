@@ -1,7 +1,7 @@
 ### 허브 배송 관리자 생성
 POST localhost:19091/api/delivery-staff/hub
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MzU2OTMxLCJleHAiOjE3MzQzNjA1MzF9.HnqIiOc52w8GvYkcOuKfbP2NT2jy5zmBsNeIWMOnoMi5PVylFxuMS2dzUXykuYDyXXAHyuYijCSZfhTUVwFHiQ
 
 {
   "deliveryStaffId": 1
@@ -10,11 +10,11 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 ### 업체 배송 관리자 생성
 POST localhost:19091/api/delivery-staff/company
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjcwNzg3LCJleHAiOjE3MzQyNzQzODd9.rvzBEsBulLltCr-1vIKc5dcQR7OSeHnAc5TDe3eJWMja0pQTiDTk-D3P5H1NurStqYvKm727QFVa6vxRKiQvAQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MzU2OTMxLCJleHAiOjE3MzQzNjA1MzF9.HnqIiOc52w8GvYkcOuKfbP2NT2jy5zmBsNeIWMOnoMi5PVylFxuMS2dzUXykuYDyXXAHyuYijCSZfhTUVwFHiQ
 
 {
 "deliveryStaffId": 2,
-"hubId": "42af8b30-3d6a-43ae-861b-c76eb25c967f"
+"hubId": "123e4567-e89b-12d3-a456-426614174000"
 }
 
 ### 배송 관리자 목록 조회
@@ -31,16 +31,18 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 ### 배송 관리자 수정 (허브->업체)
 PATCH localhost:19091/api/delivery-staff/1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MzU2OTMxLCJleHAiOjE3MzQzNjA1MzF9.HnqIiOc52w8GvYkcOuKfbP2NT2jy5zmBsNeIWMOnoMi5PVylFxuMS2dzUXykuYDyXXAHyuYijCSZfhTUVwFHiQ
+
 
 {
   "staffType": "COMPANY_STAFF",
-  "hubId": "42af8b30-3d6a-43ae-861b-c76eb25c967f"
+  "hubId": "123e4567-e89b-12d3-a456-426614174000"
 }
 
 ### 배송 관리자 수정 (업체->허브)
 PATCH localhost:19091/api/delivery-staff/1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5Nzk3LCJleHAiOjE3MzQyNTMzOTd9.fdoJEY7R8OMOHcB8z-dyVgV83huazgkRnzQ31hMH1W1Ib_WtqcF4n03N4mS1XOmD1IsqsUNso2Pckx7TABgb7g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MzU2OTMxLCJleHAiOjE3MzQzNjA1MzF9.HnqIiOc52w8GvYkcOuKfbP2NT2jy5zmBsNeIWMOnoMi5PVylFxuMS2dzUXykuYDyXXAHyuYijCSZfhTUVwFHiQ
 
 {
   "staffType": "HUB_STAFF"
@@ -49,11 +51,11 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSI
 ### 배송 관리자 수정 (업체 hubId 변경)
 PATCH localhost:19091/api/delivery-staff/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MjQ5Nzk3LCJleHAiOjE3MzQyNTMzOTd9.fdoJEY7R8OMOHcB8z-dyVgV83huazgkRnzQ31hMH1W1Ib_WtqcF4n03N4mS1XOmD1IsqsUNso2Pckx7TABgb7g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VyX2lkIjoxLCJyb2xlIjoiTUFTVEVSIiwiaXNzIjoiYXV0aC1zZXJ2aWNlIiwiaWF0IjoxNzM0MzU2OTMxLCJleHAiOjE3MzQzNjA1MzF9.HnqIiOc52w8GvYkcOuKfbP2NT2jy5zmBsNeIWMOnoMi5PVylFxuMS2dzUXykuYDyXXAHyuYijCSZfhTUVwFHiQ
 
 {
   "staffType": "COMPANY_STAFF",
-  "hubId": "52af8b30-3d6a-43ae-861b-c76eb25c967f"
+  "hubId": "456e4567-e89b-12d3-a456-426614174000"
 }
 
 ### 배송 관리자 삭제
