@@ -11,6 +11,7 @@ import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliverySt
 import com.spring.dozen.delivery.application.dto.deliveryStaff.CompanyDeliveryStaffCreateResponse;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffDetailResponse;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffListResponse;
+import com.spring.dozen.delivery.application.dto.deliveryStaff.DeliveryStaffUpdate;
 import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffSearchCond;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreate;
 import com.spring.dozen.delivery.application.dto.deliveryStaff.HubDeliveryStaffCreateResponse;
@@ -21,7 +22,6 @@ import com.spring.dozen.delivery.domain.entity.DeliveryStaffHub;
 import com.spring.dozen.delivery.domain.enums.StaffType;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffHubRepository;
 import com.spring.dozen.delivery.domain.repository.DeliveryStaffRepository;
-import com.spring.dozen.delivery.presentation.dto.deliveryStaff.DeliveryStaffUpdateRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -88,7 +88,7 @@ public class DeliveryStaffService {
 	}
 
 	@Transactional
-	public DeliveryStaffDetailResponse updateDeliveryStaff(Long deliveryStaffId, DeliveryStaffUpdateRequest request) {
+	public DeliveryStaffDetailResponse updateDeliveryStaff(Long deliveryStaffId, DeliveryStaffUpdate request) {
 		DeliveryStaff deliveryStaff = findDeliveryStaffById(deliveryStaffId);
 
 		StaffType newStaffType = getStaffType(request.staffType());

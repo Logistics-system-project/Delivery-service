@@ -78,7 +78,7 @@ public class DeliveryStaffController {
 		@PathVariable Long deliveryStaffId,
 		@RequestBody DeliveryStaffUpdateRequest request
 	) {
-		return ApiResponse.success(deliveryStaffService.updateDeliveryStaff(deliveryStaffId, request));
+		return ApiResponse.success(deliveryStaffService.updateDeliveryStaff(deliveryStaffId, request.toServiceDto()));
 	}
 
 	@DeleteMapping("/{deliveryStaffId}")

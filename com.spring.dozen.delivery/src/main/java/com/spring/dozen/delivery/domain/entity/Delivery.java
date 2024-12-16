@@ -74,5 +74,16 @@ public class Delivery extends BaseEntity {
 			.build();
 	}
 
+	public void update(UUID departureHubId, UUID arrivalHubId, String address, String recipientName, String recipientSlackId, DeliveryStaff companyDeliveryStaff) {
+		this.departureHubId = departureHubId;
+		this.arrivalHubId = arrivalHubId;
+		this.address = address;
+		this.recipientName = recipientName;
+		this.recipientSlackId = recipientSlackId;
+		this.companyDeliveryStaff = companyDeliveryStaff;
+	}
 
+	public void updateStatus(DeliveryStatus status) {
+		this.status = status;
+	}
 }
