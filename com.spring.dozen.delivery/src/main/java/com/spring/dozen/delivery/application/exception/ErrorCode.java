@@ -25,6 +25,8 @@ public enum ErrorCode {
 	ACCESS_DENIED(FORBIDDEN, "접근 권한이 없습니다."),
 	MISSING_ROLE(BAD_REQUEST, "권한 정보가 없습니다."),
 
+	HUB_NOT_FOUND(NOT_FOUND, "존재하지 않는 허브 정보입니다."),
+
 	;
 	private final HttpStatus httpStatus;
 	private final String message;
